@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About · Peel</title>
+    <meta
+      name="description"
+      content="이 랜딩의 의도(끝까지 당겨 숨은 문제를 드러내는 태도)와 인터랙션의 구성 요소를 소개합니다."
+    />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+  </head>
+  <body>
+    <header class="topbar" role="banner">
+      <div class="container topbar-inner">
+        <a class="brand" href="../index.html" aria-label="Peel Landing 홈">PEEL</a>
+        <nav class="nav" aria-label="주요 메뉴">
+          <a href="../index.html">Landing</a>
+          <a href="./about.html">About</a>
+          <a href="./code.html">Code</a>
+          <a href="./contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="section">
+        <div class="container">
+          <div class="pill"><span class="kbd">scroll</span>로 끄스러미를 “peel”</div>
+          <h1 class="h1" style="margin-top: 14px">끝까지 당겨서, 안쪽의 문제를 보이게.</h1>
+          <p class="lead">
+            손톱 옆 끄스러미는 사소하지만, 한번 거슬리면 계속 신경 쓰입니다. 이 랜딩은 그 감각을
+            “문제 정의”로 전환합니다. 남들이 피하는 불편한 지점을 끝까지 잡아당겨서, 감춰진 본질을
+            드러내는 태도.
+          </p>
+
+          <div class="grid">
+            <div class="col-6">
+              <div class="card" style="padding: 18px">
+                <h2 style="font-size: 18px; letter-spacing: -0.03em">구성</h2>
+                <p class="lead" style="margin-top: 10px">
+                  랜딩은 크게 3개 레이어로 구성됩니다: 텍스트(상태 변화), 끄스러미(길이/회전/이동),
+                  상처/피(중반부터 노출).
+                </p>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="card" style="padding: 18px">
+                <h2 style="font-size: 18px; letter-spacing: -0.03em">보완 포인트</h2>
+                <p class="lead" style="margin-top: 10px">
+                  기존 인라인 JS는 스크롤 이벤트마다 즉시 렌더를 때렸는데, 지금은 rAF로 “따라오게”
+                  만들어 더 매끈한 당김감을 주고, 리사이즈 시 측정값도 캐시합니다.
+                </p>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="card" style="padding: 18px">
+                <h2 style="font-size: 18px; letter-spacing: -0.03em">파일 구조</h2>
+                <p class="lead" style="margin-top: 10px">
+                  <span class="kbd">assets/css/base.css</span> 공통,
+                  <span class="kbd">assets/css/landing.css</span> 랜딩 전용,
+                  <span class="kbd">assets/js/landing.js</span> 인터랙션 로직.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer">© Peel. about page.</div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+

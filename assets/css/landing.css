@@ -1,0 +1,230 @@
+/* Landing-specific visuals */
+.hero {
+  height: 360vh;
+  position: relative;
+  background: var(--bg);
+}
+
+.sticky {
+  position: sticky;
+  /* 헤더가 fixed(56px)라 sticky가 상단에 붙을 때 씬이 가려지는 문제 방지 */
+  top: 56px;
+  height: calc(100vh - 56px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.hero {
+  /* sticky 높이를 줄인 만큼 스크롤 구간(=peel 구간)이 갑자기 끝나 보이지 않게 보정 */
+  height: calc(360vh + 56px);
+}
+
+.scene {
+  position: relative;
+  width: min(92vw, 720px);
+  height: min(90vh, 820px);
+}
+
+.title {
+  position: absolute;
+  top: 7%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(2.4rem, 5vw, 5rem);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  text-align: center;
+  white-space: nowrap;
+  z-index: 20;
+  transition: opacity 0.25s ease;
+}
+
+.sub {
+  position: absolute;
+  bottom: 13%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(1rem, 1.6vw, 1.8rem);
+  color: rgba(255, 255, 255, 0.9);
+  z-index: 20;
+  transition: opacity 0.25s ease;
+  white-space: nowrap;
+}
+
+.finger-wrap {
+  position: absolute;
+  left: 50%;
+  top: 18%;
+  transform: translateX(-50%);
+  width: min(32vw, 230px);
+  height: min(62vh, 520px);
+  z-index: 5;
+}
+
+.finger {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    #e2bc9b 0%,
+    var(--finger) 45%,
+    var(--finger-shadow) 100%
+  );
+  border-radius: 120px 120px 60px 60px;
+  box-shadow: inset -8px 0 0 rgba(0, 0, 0, 0.06), inset 8px 0 0 rgba(255, 255, 255, 0.04);
+}
+
+.nail {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44%;
+  height: 30%;
+  background: linear-gradient(to bottom, #edd8d8 0%, var(--nail) 100%);
+  border-radius: 999px 999px 40px 40px;
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.03);
+}
+
+/* 손톱 오른쪽 아래 근처에 끄스러미가 붙어 시작되도록 설계 */
+.cuticle-area {
+  position: absolute;
+  top: 10.5%;
+  left: 68%;
+  width: 22%;
+  height: 20%;
+  z-index: 12;
+  pointer-events: none;
+}
+
+.wound {
+  position: absolute;
+  top: 46px;
+  left: 2px;
+  width: 20px;
+  height: 12px;
+  background: linear-gradient(to bottom, #6e0a12, var(--blood));
+  border-radius: 10px 10px 8px 8px;
+  opacity: 0;
+  transform: scale(0.6);
+  transform-origin: center;
+  filter: blur(0.2px);
+  box-shadow: 0 0 10px rgba(141, 13, 22, 0.15);
+}
+
+.blood-line {
+  position: absolute;
+  top: 56px;
+  left: 9px;
+  width: 7px;
+  height: 0px;
+  background: linear-gradient(to bottom, var(--blood-hi), var(--blood));
+  border-radius: 999px;
+  opacity: 0;
+  box-shadow: 0 0 8px rgba(195, 29, 40, 0.2);
+}
+
+.blood-drop {
+  position: absolute;
+  top: 56px;
+  left: 4px;
+  width: 16px;
+  height: 18px;
+  background: radial-gradient(circle at 35% 30%, #d93a44 0%, var(--blood) 70%);
+  border-radius: 50% 50% 55% 55%;
+  opacity: 0;
+  transform: translateY(0) scale(0.7);
+  filter: blur(0.2px);
+}
+
+.hangnail-root {
+  position: absolute;
+  top: 38px;
+  left: 2px;
+  width: 22px;
+  height: 20px;
+  background: linear-gradient(to bottom, #f7efe5 0%, var(--hangnail-shadow) 100%);
+  border-radius: 5px 5px 7px 7px;
+  z-index: 3;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+}
+
+.hangnail-strip {
+  position: absolute;
+  top: 46px;
+  left: 9px;
+  width: 9px;
+  height: 20px;
+  background: linear-gradient(to bottom, var(--hangnail) 0%, var(--hangnail-shadow) 100%);
+  border-radius: 999px;
+  transform-origin: top center;
+  z-index: 5;
+  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.02);
+  will-change: transform, height;
+}
+
+.tear-tip {
+  position: absolute;
+  top: 36px;
+  left: 2px;
+  width: 22px;
+  height: 24px;
+  background: linear-gradient(to bottom, #f8f0e7 0%, var(--hangnail) 100%);
+  border-radius: 5px 5px 8px 8px;
+  z-index: 6;
+  transform-origin: center bottom;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+  will-change: transform, top, left;
+}
+
+.noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: radial-gradient(circle at 20% 30%, #fff 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 60%, #fff 0 1px, transparent 1px),
+    radial-gradient(circle at 40% 80%, #fff 0 1px, transparent 1px);
+  background-size: 180px 180px, 220px 220px, 260px 260px;
+  z-index: 1;
+}
+
+.next {
+  min-height: 100vh;
+  background: radial-gradient(circle at center, rgba(141, 13, 22, 0.08) 0%, transparent 30%),
+    #0a0a0a;
+  color: #f5f1ed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8vw;
+  text-align: center;
+}
+
+.next-inner {
+  max-width: 980px;
+}
+
+.next h2 {
+  font-size: clamp(2rem, 5vw, 5rem);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  margin-bottom: 18px;
+}
+
+.next p {
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .sub {
+    transition: none;
+  }
+}
+
