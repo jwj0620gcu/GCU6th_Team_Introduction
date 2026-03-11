@@ -35,7 +35,7 @@
           <div class="hud-chip" title="게임 컨셉 유지">INPUT: CINEMATIC</div>
           <div class="hud-chip" title="후반부는 더 편하게 열림">UX MODE: OPEN</div>
           <button id="btnMute" class="hud-btn" type="button" aria-pressed="false">
-            MUTE
+            FX: ON
           </button>
         </div>
       </header>
@@ -57,6 +57,12 @@
                 <div class="titlecard-title" aria-label="타이틀">YUJEONG</div>
                 <div class="titlecard-sub dim">UNCOMFORTABLE PORTFOLIO · 8BIT EDITION</div>
 
+                <ul class="boot-status" aria-label="부팅 상태">
+                  <li>SYSTEM BOOTING...</li>
+                  <li>SHORTCUTS LOCKED</li>
+                  <li>COMFORT MODE NOT FOUND</li>
+                </ul>
+
                 <button id="btnPressStart" class="px-btn" type="button">
                   LOADING...
                 </button>
@@ -65,11 +71,11 @@
                   <div class="boot-loader-bar">
                     <span id="bootLoaderFill" class="boot-loader-fill"></span>
                   </div>
-                  <p id="bootLoaderText" class="boot-loader-text">시스템을 여는 중입니다... 5초</p>
+                  <p id="bootLoaderText" class="boot-loader-text">시스템을 여는 중입니다... 7초</p>
                 </div>
 
                 <div class="titlecard-hint dim">
-                  <span class="caret" aria-hidden="true">█</span> 로딩이 끝나면 버튼이 열립니다
+                  <span class="caret" aria-hidden="true">█</span> 지금은 불편하게 시작하지만, 뒤로 갈수록 편해집니다
                 </div>
               </div>
             </section>
@@ -84,8 +90,8 @@
                       <div class="player-banner-copy">
                         <strong class="player-banner-title">전유정 | Product Builder</strong>
                         <p class="player-banner-text">
-                          불편한 지점을 그냥 지나치지 않고, 왜 그런지 살펴본 뒤 더 나은 흐름으로
-                          바꾸는 사람입니다.
+                          사용자가 멈추는 지점을 찾고, 그 순간을 더 자연스러운 흐름으로
+                          다시 설계하는 사람입니다.
                         </p>
                       </div>
                       <dl class="stats player-banner-stats">
@@ -104,29 +110,32 @@
                     <div class="card-h">MISSION</div>
                     <div class="card-b">
                       <p class="lead">
-                        처음에는 일부러 작은 불편을 드렸습니다. 그리고 지금부터는 그 불편이 어디에서
-                        느껴졌는지 천천히 보여드리려고 합니다.
+                        처음에는 일부러 작은 불편을 남겨두었습니다. 지금부터는 그 불편이 어디에서
+                        시작됐는지, 그리고 저는 그것을 어떻게 읽는 사람인지 보여드리겠습니다.
                       </p>
                       <div class="quest" aria-label="퀘스트">
                         <div class="quest-item">
-                          <span class="q-title">어떤 부분이 불편하셨나요?</span>
-                          <span class="q-sub">처음 화면에서 느껴진 멈춤과 기다림을 다시 짚어봅니다.</span>
+                          <span class="q-title">어디에서 잠깐 멈추셨나요?</span>
+                          <span class="q-sub">처음 화면에서 느껴진 기다림과 망설임을 다시 짚어봅니다.</span>
                         </div>
                         <div class="quest-item">
-                          <span class="q-title">왜 그렇게 느껴지셨는지 살펴봅니다</span>
-                          <span class="q-sub">작은 지연과 번거로움이 사용자를 어떻게 멈추게 하는지 봅니다.</span>
+                          <span class="q-title">왜 그런 반응이 생겼는지 살펴봅니다</span>
+                          <span class="q-sub">작은 지연과 애매한 선택지가 사용자를 어떻게 멈추게 하는지 봅니다.</span>
                         </div>
                         <div class="quest-item">
-                          <span class="q-title">저는 그런 불편을 찾는 사람입니다</span>
-                          <span class="q-sub">그리고 그 지점을 더 나은 경험으로 바꾸는 방식으로 일합니다.</span>
+                          <span class="q-title">저는 그 멈춤을 문제로 읽는 사람입니다</span>
+                          <span class="q-sub">그리고 그 지점을 더 자연스러운 흐름으로 바꾸는 방식으로 일합니다.</span>
                         </div>
                       </div>
                       <div class="actions">
-                        <button id="btnStart" class="btn primary" type="button">포트폴리오 소개 시작</button>
-                        <button id="btnSkip" class="btn ghost" type="button" title="권장하지 않음">
-                          빠르게 이동하기
+                        <button id="btnStart" class="btn primary" type="button">불편을 끝까지 체험하기</button>
+                        <button id="btnSkip" class="btn ghost" type="button" title="정석 포트폴리오 바로 열기">
+                          편한 버전 바로 보기
                         </button>
                       </div>
+                      <p id="frictionHint" class="friction-hint">
+                        힌트: 처음엔 원하는 버튼이 쉽게 잡히지 않도록 해두었습니다.
+                      </p>
                     </div>
                   </div>
                   </div>
@@ -161,9 +170,9 @@
                 <div class="card-b">
                   <p id="reasonText" class="lead"></p>
                   <ul class="bullets">
-                    <li>메시지를 읽기 전에 감각으로 먼저 느끼게 만들기</li>
-                    <li>불편한 경험을 설계하고 다시 편하게 바꾸는 역량 보여주기</li>
-                    <li>인터랙션, 스토리, UX를 한 화면 안에서 연결하기</li>
+                    <li>설명보다 먼저 불편을 직접 체감하게 만들기</li>
+                    <li>사용자가 멈추는 지점을 문제로 읽는 기준 보여주기</li>
+                    <li>같은 메시지를 불편한 경험과 편한 경험으로 대비해 보여주기</li>
                   </ul>
 
                   <div class="works" aria-label="프로젝트 레벨">
@@ -209,6 +218,14 @@
                       마지막 문 열기
                     </button>
                   </div>
+                  <div class="comfort-switch">
+                    <button id="btnOpenNow" class="btn comfort-btn" type="button">
+                      이제 편한 흐름으로 바로 열기
+                    </button>
+                    <p class="comfort-caption">
+                      여기까지 느낀 불편이면 충분합니다. 아래부터는 같은 내용을 더 쉽고 빠르게 읽히는 구조로 보여드립니다.
+                    </p>
+                  </div>
                   <div class="actions">
                     <button id="btnRestart" class="btn ghost" type="button">RESTART</button>
                   </div>
@@ -226,36 +243,6 @@
         <div class="pf-orbit pf-orbit-a" aria-hidden="true"></div>
         <div class="pf-orbit pf-orbit-b" aria-hidden="true"></div>
 
-        <section class="pf-hero reveal" data-reveal>
-          <div class="pf-kicker">LEVEL 2. NOW IT GETS EASIER</div>
-          <h2 class="pf-title">전유정</h2>
-          <p class="pf-sub">방금 느끼신 불편을, 문제로 다시 읽어내는 기획자입니다.</p>
-          <p class="pf-desc">
-            클릭하기 어렵고, 어디를 눌러야 할지 잠깐 멈추게 되는 경험이 있었을 겁니다.
-            저는 그런 지점을 그냥 넘기지 않고, 왜 불편했는지 구조화해 더 나은 흐름으로 바꾸는
-            사람입니다.
-          </p>
-          <div class="pf-tags">
-            <span>불편 발견</span>
-            <span>문제 구조화</span>
-            <span>서비스 기획</span>
-            <span>PM</span>
-            <span>검증 중심 사고</span>
-          </div>
-          <div class="pf-actions">
-            <button type="button" class="btn primary pf-jump" data-target="projects">프로젝트 먼저 보기</button>
-            <button type="button" class="btn ghost pf-jump" data-target="about">나를 짧게 보기</button>
-            <button type="button" class="btn ghost pf-jump" data-target="contact">연락 바로 가기</button>
-          </div>
-          <div class="pf-progress" aria-label="포트폴리오 빠른 안내">
-            <span>01 INTRO</span>
-            <span>02 ABOUT</span>
-            <span>03 STRENGTH</span>
-            <span>04 PROJECTS</span>
-            <span>05 CONTACT</span>
-          </div>
-        </section>
-
         <nav class="pf-quicknav reveal" aria-label="빠른 이동" data-reveal>
           <button class="pf-tab is-active" type="button" data-target="intro">INTRO</button>
           <button class="pf-tab" type="button" data-target="about">ABOUT</button>
@@ -268,32 +255,83 @@
           <div class="pf-copy">
             <p class="pf-copy-line">조금 전, 버튼을 누르는 과정이 매끄럽지 않으셨을 겁니다.</p>
             <p class="pf-copy-line">어디를 눌러야 하는지 잠깐 멈칫한 순간도 있었을 수 있습니다.</p>
-            <p class="pf-copy-line">저는 바로 그런 불편을 찾아내고 구조화하는 사람입니다.</p>
+            <p class="pf-copy-line">저는 바로 그런 멈춤을 찾아 문제로 다시 정의하는 사람입니다.</p>
           </div>
-          <button class="pf-next" type="button" data-target="about">다음 장면 보기</button>
+          <button class="pf-next" type="button" data-target="hero">이제 저를 소개하겠습니다</button>
+        </section>
+
+        <section id="pf-hero" class="pf-hero reveal" data-reveal>
+          <div class="pf-kicker">LEVEL 2. NOW IT GETS EASIER</div>
+          <h2 class="pf-title">전유정</h2>
+          <p class="pf-sub">사용자가 멈추는 지점을 찾아, 더 자연스러운 흐름으로 바꾸는 기획자입니다.</p>
+          <p class="pf-desc">
+            앞에서는 일부러 헤매게 만들었습니다. 여기서부터는 반대로, 필요한 정보가 바로 읽히고
+            다음 행동이 빠르게 보이도록 정리했습니다. 저는 이런 대비를 설계하는 사람입니다.
+          </p>
+          <div class="pf-comfort-bar" aria-label="경험 전환 안내">
+            <span>불편 체험 완료</span>
+            <span>낮은 인지 부담</span>
+            <span>즉시 이동 가능</span>
+          </div>
+          <div class="pf-tags">
+            <span>불편 발견</span>
+            <span>문제 구조화</span>
+            <span>서비스 기획</span>
+            <span>PM</span>
+            <span>검증 중심 사고</span>
+          </div>
+          <div class="pf-actions">
+            <button type="button" class="btn primary pf-jump" data-target="projects">프로젝트 먼저 보기</button>
+            <button type="button" class="btn ghost pf-jump" data-target="about">나를 짧게 보기</button>
+            <button type="button" class="btn ghost pf-jump" data-target="contact">연락 바로 가기</button>
+          </div>
+          <div class="pf-summary-grid reveal" data-reveal>
+            <article class="pf-summary-card">
+              <span class="pf-mini-label">What I Do</span>
+              <strong>불편을 문제로 번역합니다.</strong>
+              <p>사용자가 왜 멈췄는지 감각이 아니라 구조로 다시 정리합니다.</p>
+            </article>
+            <article class="pf-summary-card">
+              <span class="pf-mini-label">How I Work</span>
+              <strong>가설보다 검증을 먼저 봅니다.</strong>
+              <p>타깃, 실제 불편, 우선순위를 다시 확인해 방향을 분명히 만듭니다.</p>
+            </article>
+            <article class="pf-summary-card">
+              <span class="pf-mini-label">Why Me</span>
+              <strong>기획과 실행 사이를 잇습니다.</strong>
+              <p>문제 정의에 머무르지 않고 다음 화면과 다음 행동까지 연결합니다.</p>
+            </article>
+          </div>
+          <div class="pf-progress" aria-label="포트폴리오 빠른 안내">
+            <span>01 INTRO</span>
+            <span>02 ABOUT</span>
+            <span>03 STRENGTH</span>
+            <span>04 PROJECTS</span>
+            <span>05 CONTACT</span>
+          </div>
         </section>
 
         <section id="pf-about" class="pf-section pf-story" data-section="about">
           <div class="pf-story-block reveal" data-reveal>
             <div class="pf-section-label">About</div>
-            <h3 class="pf-story-title">처음 기획이 재미있다고 느낀 건 1학년 여름의 해커톤이었습니다.</h3>
+            <h3 class="pf-story-title">기획이 재미있다고 느낀 건, 빠르게 만드는 경험보다 문제를 정의하는 일이 더 중요하다는 걸 알게 되면서였습니다.</h3>
             <p class="pf-story-text">
-              첫 해커톤에서 300팀 중 10위 이내에 들었고, 그 경험을 계기로 이후 2년 동안 10번
-              이상의 해커톤과 창업 경진대회에 참여했습니다.
+              첫 해커톤 이후 2년 동안 10번이 넘는 해커톤과 창업 경진대회에 참여하며, 아이디어를
+              빠르게 구현하는 경험을 반복했습니다.
             </p>
           </div>
 
           <div class="pf-story-block reveal delay-1" data-reveal>
             <p class="pf-story-text">
-              자연스럽게 팀에서는 기획과 PM 역할을 맡는 경우가 많았고, 그 과정에서 서비스를
-              만드는 일보다 문제를 제대로 정의하는 일이 더 중요하다는 기준이 생겼습니다.
+              그 과정에서 자연스럽게 팀의 기획과 PM 역할을 맡았고, 기능을 더하는 일보다 어떤 문제를
+              풀고 있는지 먼저 분명히 하는 일이 더 중요하다는 기준이 생겼습니다.
             </p>
           </div>
 
           <div class="pf-story-block reveal delay-2" data-reveal>
             <p class="pf-story-text">
               그래서 프로젝트를 시작하면 기능보다 먼저 대상, 실제 불편, 그리고 우리가 세운 가설이
-              얼마나 검증되었는지부터 다시 확인합니다.
+              검증 가능한지부터 다시 확인합니다.
             </p>
           </div>
 
@@ -316,29 +354,29 @@
         <section id="pf-strength" class="pf-section pf-section-stack" data-section="strength">
           <div class="pf-section-heading reveal" data-reveal>
             <div class="pf-section-label">Strength</div>
-            <h3 class="pf-section-title">제가 일하는 방식은 방향이 흔들릴 때 더 분명해집니다.</h3>
+            <h3 class="pf-section-title">저는 아이디어를 더하는 사람보다, 방향이 맞는지 다시 점검하는 사람에 가깝습니다.</h3>
           </div>
 
           <div class="pf-stack">
             <article class="pf-stack-card reveal" data-reveal>
               <span class="pf-stack-index">01</span>
-              <h4>문제를 문장으로 다시 씁니다.</h4>
+              <h4>문제를 한 문장으로 다시 씁니다.</h4>
               <p>
-                해결하려는 대상은 누구인지, 실제 불편은 무엇인지, 지금의 가설이 사실에 가까운지부터 다시 정리합니다.
+                해결하려는 대상이 누구인지, 실제 불편이 무엇인지, 지금의 가설이 사실에 가까운지부터 다시 정리합니다.
               </p>
             </article>
             <article class="pf-stack-card reveal delay-1" data-reveal>
               <span class="pf-stack-index">02</span>
-              <h4>잘못 잡힌 방향이면 멈추고 다시 설계합니다.</h4>
+              <h4>방향이 어긋나면 멈추고 다시 설계합니다.</h4>
               <p>
-                한 프로젝트에서는 타깃을 경계선 지능 대학생으로 잡았지만, 인터뷰를 통해 전제가 맞지 않을 수 있다는 피드백을 받고 문제 정의부터 다시 세운 경험이 있습니다.
+                한 프로젝트에서는 타깃 전제가 맞지 않을 수 있다는 인터뷰 피드백을 받고, 솔루션보다 문제 정의부터 다시 세운 경험이 있습니다.
               </p>
             </article>
             <article class="pf-stack-card reveal delay-2" data-reveal>
               <span class="pf-stack-index">03</span>
               <h4>회의와 실행 사이를 연결합니다.</h4>
               <p>
-                팀 안에서는 가설을 다시 정리하고, 무엇이 사실이고 가정인지 구분한 뒤, 실행 단계를 나누어 실제 결과물까지 이어지도록 만드는 역할을 맡아왔습니다.
+                팀 안에서는 무엇이 사실이고 무엇이 가정인지 구분한 뒤, 실행 단계를 나누어 실제 결과물까지 이어지도록 만드는 역할을 맡아왔습니다.
               </p>
             </article>
           </div>
@@ -347,7 +385,7 @@
         <section id="pf-projects" class="pf-section pf-section-projects" data-section="projects">
           <div class="pf-section-heading reveal" data-reveal>
             <div class="pf-section-label">Projects</div>
-            <h3 class="pf-section-title">프로젝트는 문제와 해결 방식이 바로 보이도록 정리했습니다.</h3>
+            <h3 class="pf-section-title">프로젝트는 무엇을 만들었는지보다, 어떤 문제를 어떻게 풀었는지가 먼저 보이도록 정리했습니다.</h3>
           </div>
 
           <div class="pf-project-list">
@@ -361,12 +399,20 @@
               </p>
               <div class="pf-project-grid">
                 <div class="pf-project-block">
+                  <span class="pf-mini-label">Problem</span>
+                  <p>맞벌이 초보 부모가 분담 기준 없이 감정적으로 충돌하는 상황을 줄이는 것이 핵심 문제였습니다.</p>
+                </div>
+                <div class="pf-project-block">
                   <span class="pf-mini-label">Role</span>
                   <p>서비스 기획 / UX 설계</p>
                 </div>
                 <div class="pf-project-block">
-                  <span class="pf-mini-label">Key</span>
-                  <p>AI 역할 추천, 상담 챗봇, 감정 및 분담 리포트</p>
+                  <span class="pf-mini-label">Decision</span>
+                  <p>기능을 나열하기보다 역할 추천, 상담, 리포트가 하나의 흐름으로 이어지도록 구조를 정리했습니다.</p>
+                </div>
+                <div class="pf-project-block">
+                  <span class="pf-mini-label">Outcome</span>
+                  <p>분담 문제를 단순 기록이 아니라 추천, 대화, 피드백이 이어지는 서비스 흐름으로 풀어냈습니다.</p>
                 </div>
               </div>
             </article>
@@ -381,12 +427,20 @@
               </p>
               <div class="pf-project-grid">
                 <div class="pf-project-block">
+                  <span class="pf-mini-label">Problem</span>
+                  <p>비판적 사고의 필요는 크지만, 실제 학습 경험은 지루하고 오래 유지되기 어렵다는 점에 주목했습니다.</p>
+                </div>
+                <div class="pf-project-block">
                   <span class="pf-mini-label">Role</span>
                   <p>기획 / 시나리오 설계</p>
                 </div>
                 <div class="pf-project-block">
-                  <span class="pf-mini-label">Key</span>
-                  <p>편향 탐지, 기사 분석 브랜치, AI 기반 요약 및 리포트</p>
+                  <span class="pf-mini-label">Decision</span>
+                  <p>정답을 알려주는 방식보다, 브랜치형 인터랙션으로 사용자가 스스로 편향을 발견하게 만드는 구조를 설계했습니다.</p>
+                </div>
+                <div class="pf-project-block">
+                  <span class="pf-mini-label">Outcome</span>
+                  <p>학습 내용을 읽기보다 플레이에 가깝게 경험하게 하면서, 편향 탐지와 기사 분석을 자연스럽게 연결했습니다.</p>
                 </div>
               </div>
             </article>
@@ -401,12 +455,20 @@
               </p>
               <div class="pf-project-grid">
                 <div class="pf-project-block">
+                  <span class="pf-mini-label">Problem</span>
+                  <p>짧은 휴가를 위해 옷을 새로 사야 하는 군인의 비용 부담과 준비 시간을 줄이는 것이 출발점이었습니다.</p>
+                </div>
+                <div class="pf-project-block">
                   <span class="pf-mini-label">Role</span>
                   <p>서비스 기획 / 비즈니스 모델 설계</p>
                 </div>
                 <div class="pf-project-block">
-                  <span class="pf-mini-label">Key</span>
-                  <p>대여형 가격 구조, 타깃 여정 정의, 운영 및 재고 요구사항 정리</p>
+                  <span class="pf-mini-label">Decision</span>
+                  <p>구매보다 대여가 더 설득력 있게 느껴지도록 가격 구조와 이용 여정을 먼저 설계했습니다.</p>
+                </div>
+                <div class="pf-project-block">
+                  <span class="pf-mini-label">Outcome</span>
+                  <p>단순 상품 제안이 아니라, 휴가 준비 부담을 줄이는 현실적인 이용 시나리오로 서비스를 정리했습니다.</p>
                 </div>
               </div>
             </article>
@@ -416,7 +478,7 @@
         <section class="pf-section pf-section-tools">
           <div class="pf-section-heading reveal" data-reveal>
             <div class="pf-section-label">Toolkit</div>
-            <h3 class="pf-section-title">필요한 도구는 과하지 않게, 목적에 맞게 사용합니다.</h3>
+            <h3 class="pf-section-title">도구는 많이 아는 것보다, 어떤 문제에 왜 쓰는지가 더 중요하다고 생각합니다.</h3>
           </div>
 
           <div class="pf-grid reveal" data-reveal>
@@ -453,16 +515,15 @@
         <section id="pf-contact" class="pf-section pf-section-contact" data-section="contact">
           <div class="pf-contact-card reveal" data-reveal>
             <div class="pf-section-label">Contact</div>
-            <h3 class="pf-section-title">이야기를 이어가고 싶다면 여기서 바로 연결됩니다.</h3>
+            <h3 class="pf-section-title">대화를 이어가고 싶다면, 여기서 가장 빠르게 연결됩니다.</h3>
             <p class="pf-desc">
-              긴 문단 대신, 필요한 채널만 빠르게 찾을 수 있게 정리했습니다. 실제 정보로 바꾸기만
-              하면 바로 쓸 수 있습니다.
+              필요한 채널만 바로 찾을 수 있도록 정리했습니다. 편하게 연락 주시면 더 이야기해보고 싶습니다.
             </p>
             <ul class="pf-contact-list">
-              <li><strong>이메일</strong><span>chunyj512@gmail.com</span></li>
-              <li><strong>GitHub</strong><span>https://github.com/chunyj512</span></li>
-              <li><strong>블로그</strong><span>https://iamyujeong.tistory.com/span></li>
-              <li><strong>LinkedIn</strong><span>www.linkedin.com/in/chunyj512</span></li>
+              <li><strong>이메일</strong><a href="mailto:chunyj512@gmail.com">chunyj512@gmail.com</a></li>
+              <li><strong>GitHub</strong><a href="https://github.com/chunyj512" target="_blank" rel="noreferrer">github.com/chunyj512</a></li>
+              <li><strong>블로그</strong><a href="https://iamyujeong.tistory.com" target="_blank" rel="noreferrer">iamyujeong.tistory.com</a></li>
+              <li><strong>LinkedIn</strong><a href="https://www.linkedin.com/in/chunyj512" target="_blank" rel="noreferrer">linkedin.com/in/chunyj512</a></li>
             </ul>
             <button class="pf-next" type="button" data-target="intro">처음 장면으로 돌아가기</button>
           </div>
