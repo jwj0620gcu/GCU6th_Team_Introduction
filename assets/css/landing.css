@@ -32,7 +32,7 @@
   position: fixed;
   top: calc(56px + 74vh);
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, 0);
   font-size: clamp(1.6rem, 2.8vw, 2.8rem);
   font-weight: 900;
   letter-spacing: -0.06em;
@@ -40,7 +40,7 @@
   white-space: normal;
   width: min(88vw, 760px);
   z-index: 30;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease;
   pointer-events: none;
 }
 
@@ -48,11 +48,11 @@
   position: fixed;
   top: calc(56px + 82vh);
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, 0);
   font-size: clamp(0.95rem, 1.35vw, 1.35rem);
   color: rgba(255, 255, 255, 0.9);
   z-index: 30;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease;
   white-space: normal;
   width: min(88vw, 760px);
   text-align: center;
@@ -67,7 +67,7 @@ body:not(.peel-active) .sub {
 .finger-wrap {
   position: fixed;
   left: 50%;
-  top: calc(56px + 48vh);
+  top: calc(56px + 39vh);
   transform: translate(-50%, -50%);
   width: min(32vw, 230px);
   height: min(62vh, 520px);

@@ -10,6 +10,7 @@
   const fleshShreds = document.getElementById("fleshShreds");
   const title = document.getElementById("title");
   const sub = document.getElementById("sub");
+  const nextSection = document.querySelector(".next");
 
   if (
     !hero ||
@@ -22,7 +23,8 @@
     !bloodDrop ||
     !fleshShreds ||
     !title ||
-    !sub
+    !sub ||
+    !nextSection
   ) {
     return;
   }
@@ -31,12 +33,15 @@
 
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
   const lerp = (a, b, t) => a + (b - a) * t;
+  const textBoundaries = [0.16, 0.42, 0.68, 0.86, 0.92, 0.97];
 
   let total = 0;
   let targetProgress = 0;
   let currentProgress = 0;
+  let lastProgress = 0;
   let ticking = false;
   let ribbonPath = null;
+  let snappedToNext = false;
 
   fleshShreds.innerHTML = `
     <svg class="flesh-ribbon-svg" viewBox="0 0 48 620" preserveAspectRatio="none" aria-hidden="true">
@@ -73,6 +78,9 @@
   }
 
   function apply(progress) {
+    const outroProgress = clamp((progress - 0.9) / 0.08, 0, 1);
+    const sceneVisibility = 1 - outroProgress;
+
     // 후반으로 갈수록 뜯김이 더 길어지게 체감 곡선
     const peelProgress = Math.pow(progress, 1.12);
 
@@ -173,28 +181,52 @@
       ribbonPath.style.opacity = `${ribbonProgress}`;
     }
 
-    /* 텍스트 변화: 스크롤 임계치에 따라 단계적으로 전환 */
-    if (progress < 0.05) {
+    /* 텍스트 변화: 단계별 문구 + 경계 구간 부드러운 전환 */
+    if (progress < textBoundaries[0]) {
       title.textContent = "";
       sub.textContent = "";
-    } else if (progress < 0.36) {
+    } else if (progress < textBoundaries[1]) {
       title.textContent = "건드리지 마.";
       sub.textContent = "";
-    } else if (progress < 0.62) {
+    } else if (progress < textBoundaries[2]) {
       title.textContent = "이미 시작했네.";
       sub.textContent = "멈추면 더 거슬려. 계속 당겨.";
-    } else if (progress < 0.84) {
+    } else if (progress < textBoundaries[3]) {
       title.textContent = "아프지?";
       sub.textContent = "이미 살이 벌어지고 있네";
-    } else {
+    } else if (progress < textBoundaries[4]) {
       title.textContent = "그냥 끝까지 당겨.";
-      sub.textContent = "숨은 문제를 꺼내.";
+      sub.textContent = "";
+    } else if (progress < textBoundaries[5]) {
+      title.textContent = "숨은 문제를 꺼내.";
+      sub.textContent = "";
+    } else {
+      title.textContent = "끝까지 당겨, 숨은 문제를 꺼내.";
+      sub.textContent = "";
     }
 
-    /* 텍스트 약간 사라졌다가 다시 보이게 */
-    const textOpacity = 1 - clamp((progress - 0.9) / 0.1, 0, 1) * 0.18;
+    const band = 0.03;
+    let transitionFade = 1;
+    for (let i = 0; i < textBoundaries.length; i += 1) {
+      const dist = Math.abs(progress - textBoundaries[i]);
+      transitionFade = Math.min(transitionFade, clamp(dist / band, 0, 1));
+    }
+
+    const tailFade = 1 - clamp((progress - 0.9) / 0.1, 0, 1) * 0.18;
+    const textOpacity = tailFade * transitionFade * sceneVisibility;
+    const blur = (1 - transitionFade) * 0.8;
+    const lift = (1 - transitionFade) * 6 - outroProgress * 24;
+
     title.style.opacity = textOpacity;
     sub.style.opacity = textOpacity;
+    title.style.transform = `translate(-50%, ${lift}px)`;
+    sub.style.transform = `translate(-50%, ${lift + 2}px)`;
+    title.style.filter = `blur(${blur}px)`;
+    sub.style.filter = `blur(${blur}px)`;
+
+    // 마지막 구간에서 엄지/손가락 씬을 먼저 사라지게 해서 다음 섹션과 겹침 방지
+    fingerWrap.style.opacity = `${sceneVisibility}`;
+    fingerWrap.style.transform = `translate(-50%, -50%) scale(${lerp(1, 0.92, outroProgress)})`;
   }
 
   function tick() {
@@ -227,6 +259,20 @@
 
   function onScroll() {
     computeTargetProgress();
+
+    // "끝까지 당겨" 구간에 오면 추가 스크롤 없이 바로 자기소개 섹션으로 이동
+    const isScrollingDown = targetProgress > lastProgress;
+    if (!snappedToNext && isScrollingDown && targetProgress >= 0.86) {
+      snappedToNext = true;
+      nextSection.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+    }
+
+    // 다시 위로 올리면 재진입 시 재동작 가능
+    if (snappedToNext && targetProgress < 0.5) {
+      snappedToNext = false;
+    }
+
+    lastProgress = targetProgress;
     requestTick();
   }
 
