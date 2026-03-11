@@ -1,6 +1,6 @@
 /* Landing-specific visuals */
 .hero {
-  height: 360vh;
+  height: 500vh;
   position: relative;
   background: var(--bg);
 }
@@ -19,7 +19,7 @@
 
 .hero {
   /* sticky 높이를 줄인 만큼 스크롤 구간(=peel 구간)이 갑자기 끝나 보이지 않게 보정 */
-  height: calc(360vh + 56px);
+  height: calc(500vh + 56px);
 }
 
 .scene {
@@ -29,39 +29,55 @@
 }
 
 .title {
-  position: absolute;
-  top: 7%;
+  position: fixed;
+  top: calc(56px + 74vh);
   left: 50%;
   transform: translateX(-50%);
-  font-size: clamp(2.4rem, 5vw, 5rem);
+  font-size: clamp(1.6rem, 2.8vw, 2.8rem);
   font-weight: 900;
   letter-spacing: -0.06em;
   text-align: center;
-  white-space: nowrap;
-  z-index: 20;
+  white-space: normal;
+  width: min(88vw, 760px);
+  z-index: 30;
   transition: opacity 0.25s ease;
+  pointer-events: none;
 }
 
 .sub {
-  position: absolute;
-  bottom: 13%;
+  position: fixed;
+  top: calc(56px + 82vh);
   left: 50%;
   transform: translateX(-50%);
-  font-size: clamp(1rem, 1.6vw, 1.8rem);
+  font-size: clamp(0.95rem, 1.35vw, 1.35rem);
   color: rgba(255, 255, 255, 0.9);
-  z-index: 20;
+  z-index: 30;
   transition: opacity 0.25s ease;
-  white-space: nowrap;
+  white-space: normal;
+  width: min(88vw, 760px);
+  text-align: center;
+  pointer-events: none;
+}
+
+body:not(.peel-active) .title,
+body:not(.peel-active) .sub {
+  opacity: 0 !important;
 }
 
 .finger-wrap {
-  position: absolute;
+  position: fixed;
   left: 50%;
-  top: 18%;
-  transform: translateX(-50%);
+  top: calc(56px + 48vh);
+  transform: translate(-50%, -50%);
   width: min(32vw, 230px);
   height: min(62vh, 520px);
   z-index: 5;
+  opacity: 0;
+  transition: opacity 0.15s linear;
+}
+
+body.peel-active .finger-wrap {
+  opacity: 1;
 }
 
 .finger {
@@ -103,9 +119,9 @@
 .wound {
   position: absolute;
   top: 46px;
-  left: 2px;
-  width: 20px;
-  height: 12px;
+  left: 1px;
+  width: 22px;
+  height: 14px;
   background: linear-gradient(to bottom, #6e0a12, var(--blood));
   border-radius: 10px 10px 8px 8px;
   opacity: 0;
@@ -113,6 +129,20 @@
   transform-origin: center;
   filter: blur(0.2px);
   box-shadow: 0 0 10px rgba(141, 13, 22, 0.15);
+}
+
+.torn-skin {
+  position: absolute;
+  top: 43px;
+  left: -1px;
+  width: 26px;
+  height: 16px;
+  background: linear-gradient(to bottom, #f1b9a7 0%, #b85a4e 65%, #7f1f1f 100%);
+  border-radius: 8px 11px 9px 8px;
+  transform-origin: top left;
+  opacity: 0;
+  transform: translate(-1px, -1px) rotate(0deg) scale(0.5);
+  filter: blur(0.2px);
 }
 
 .blood-line {
@@ -140,6 +170,28 @@
   filter: blur(0.2px);
 }
 
+.flesh-shreds {
+  position: absolute;
+  top: 46px;
+  left: 8px;
+  width: 48px;
+  height: 40px;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 8;
+  opacity: 0;
+  transform: translate(0, 0) rotate(0deg);
+  transform-origin: top left;
+  will-change: transform, height, opacity;
+}
+
+.flesh-ribbon-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 3px rgba(163, 106, 76, 0.32));
+}
+
 .hangnail-root {
   position: absolute;
   top: 38px;
@@ -155,7 +207,7 @@
 .hangnail-strip {
   position: absolute;
   top: 46px;
-  left: 9px;
+  left: 8px;
   width: 9px;
   height: 20px;
   background: linear-gradient(to bottom, var(--hangnail) 0%, var(--hangnail-shadow) 100%);
@@ -169,7 +221,7 @@
 .tear-tip {
   position: absolute;
   top: 36px;
-  left: 2px;
+  left: 1px;
   width: 22px;
   height: 24px;
   background: linear-gradient(to bottom, #f8f0e7 0%, var(--hangnail) 100%);
@@ -227,4 +279,3 @@
     transition: none;
   }
 }
-
