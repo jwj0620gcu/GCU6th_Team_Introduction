@@ -210,7 +210,7 @@ body.peel-active .finger-wrap {
   filter: drop-shadow(0 0 3px rgba(163, 106, 76, 0.32));
 }
 
-.hangnail-root {
+/*.hangnail-root {
   position: absolute;
   top: 38px;
   left: 2px;
@@ -220,7 +220,8 @@ body.peel-active .finger-wrap {
   border-radius: 5px 5px 7px 7px;
   z-index: 3;
 }
-
+  */
+/*
 .hangnail-strip {
   position: absolute;
   top: 46px;
@@ -232,17 +233,19 @@ body.peel-active .finger-wrap {
   transform-origin: top center;
   z-index: 5;
 }
+  */
 
 .tear-tip {
   position: absolute;
-  top: 36px;
-  left: 1px;
-  width: 22px;
-  height: 24px;
+  top: 38px;
+  left: 2px;
+  width: 15px;
+  height: 30px;
   background: linear-gradient(to bottom, #f8f0e7 0%, var(--hangnail) 100%);
-  border-radius: 5px 5px 8px 8px;
-  z-index: 6;
+  border-radius: 6px 6px 11px 11px;
+  z-index: 10;
   transform-origin: center bottom;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .noise {
