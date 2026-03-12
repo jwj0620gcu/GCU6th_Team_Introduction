@@ -94,8 +94,10 @@ function usePeelAnimation(refs) {
       const scrollVelocity = velocitySmoothed;
       const outroProgress = clamp((progress - 0.9) / 0.08, 0, 1);
       const sceneVisibility = 1 - outroProgress;
+      const tipIntroProgress = clamp((progress - textBoundaries[0]) / 0.06, 0, 1);
       const peelStart = textBoundaries[1];
       const peelMotion = clamp((progress - peelStart) / (1 - peelStart), 0, 1);
+      const riseProgress = Math.pow(clamp((progress - peelStart) / 0.54, 0, 1), 1.05);
       const focusBase = clamp((progress - 0.06) / 0.26, 0, 1);
       const focusDeep = clamp((progress - 0.42) / 0.42, 0, 1);
       const focusProgress =
@@ -138,7 +140,7 @@ function usePeelAnimation(refs) {
       const tipMorphProgress = clamp((progress - peelStart) / 0.62, 0, 1);
       strip.style.opacity = '0';
       // 초기 끄스러미가 사라지지 않고 그대로 길어지며 리본의 시작점이 되도록 유지
-      tip.style.opacity = `${sceneVisibility}`;
+      tip.style.opacity = `${sceneVisibility * tipIntroProgress}`;
       tip.style.width = `${lerp(15, 9, tipMorphProgress)}px`;
       tip.style.height = `${lerp(30, 64, tipMorphProgress)}px`;
       tip.style.borderRadius = `${lerp(6, 4, tipMorphProgress)}px ${lerp(6, 4, tipMorphProgress)}px ${lerp(
@@ -151,22 +153,22 @@ function usePeelAnimation(refs) {
       })`;
 
       const bloodProgress = clamp((progress - peelStart) / 0.52, 0, 1);
-      const bloodHeight = lerp(0, 96, bloodProgress);
+      const bloodHeight = lerp(0, 126, bloodProgress);
       bloodLine.style.opacity = `${bloodProgress}`;
       bloodLine.style.height = `${bloodHeight}px`;
-      bloodLine.style.width = `${lerp(5, 8.8, bloodProgress) + scrollVelocity * 0.08}px`;
-      bloodLine.style.left = `${lerp(9, 8, bloodProgress)}px`;
+      bloodLine.style.width = `${lerp(5, 9.8, bloodProgress) + scrollVelocity * 0.08}px`;
+      bloodLine.style.left = `${lerp(9, 7.4, bloodProgress)}px`;
 
       const dropProgress = clamp((progress - peelStart) / 0.56, 0, 1);
       bloodDrop.style.opacity = `${dropProgress}`;
       bloodDrop.style.transform = `translate(${Math.sin(progress * 38) * scrollVelocity * 0.45}px, ${lerp(
         0,
-        72,
+        98,
         dropProgress
-      )}px) scale(${lerp(0.7, 1.02, dropProgress)})`;
-      bloodDrop.style.width = `${lerp(12, 16, dropProgress)}px`;
-      bloodDrop.style.height = `${lerp(14, 20, dropProgress)}px`;
-      bloodDrop.style.left = `${lerp(6, 4, dropProgress)}px`;
+      )}px) scale(${lerp(0.7, 1.14, dropProgress)})`;
+      bloodDrop.style.width = `${lerp(12, 19, dropProgress)}px`;
+      bloodDrop.style.height = `${lerp(14, 24, dropProgress)}px`;
+      bloodDrop.style.left = `${lerp(6, 2.8, dropProgress)}px`;
 
       const ribbonProgress = clamp((progress - peelStart) / 0.68, 0, 1);
       const sway2 = Math.cos(progress * 6.5);
@@ -259,8 +261,11 @@ function usePeelAnimation(refs) {
       // 포커스 기준을 손톱 중앙으로 이동
       const focusShiftX = lerp(0, -12, focusProgress) + lerp(0, -12, Math.pow(focusDeep, 1.2));
       const focusShiftY = lerp(0, 72, focusProgress) + lerp(0, 26, Math.pow(focusDeep, 1.2));
+      const fingerRiseY = lerp(0, -250, riseProgress);
       fingerWrap.style.opacity = `${sceneVisibility}`;
-      fingerWrap.style.transform = `translate(-50%, -50%) translate(${focusShiftX}px, ${focusShiftY}px) scale(${
+      fingerWrap.style.transform = `translate(-50%, -50%) translate(${focusShiftX}px, ${
+        focusShiftY + fingerRiseY
+      }px) scale(${
         focusScale * outroScale
       })`;
     }
