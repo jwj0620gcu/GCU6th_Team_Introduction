@@ -56,6 +56,8 @@ function usePeelAnimation(refs) {
     let total = 0;
     let targetProgress = 0;
     let currentProgress = 0;
+    let previousProgress = 0;
+    let velocitySmoothed = 0;
     let lastProgress = 0;
     let ticking = false;
     let snappedToNext = false;
@@ -89,9 +91,18 @@ function usePeelAnimation(refs) {
     }
 
     function apply(progress) {
+      const scrollVelocity = velocitySmoothed;
       const outroProgress = clamp((progress - 0.9) / 0.08, 0, 1);
       const sceneVisibility = 1 - outroProgress;
-      const peelProgress = Math.pow(progress, 1.12);
+      const peelStart = textBoundaries[1];
+      const peelMotion = clamp((progress - peelStart) / (1 - peelStart), 0, 1);
+      const focusBase = clamp((progress - 0.06) / 0.26, 0, 1);
+      const focusDeep = clamp((progress - 0.42) / 0.42, 0, 1);
+      const focusProgress =
+        (focusBase * 0.72 + Math.pow(focusDeep, 1.35) * 0.28) * (1 - outroProgress * 0.15);
+      const peelProgress = Math.pow(peelMotion, 1.12);
+      const pullTension = clamp((progress - peelStart) / 0.7, 0, 1);
+      const pullShake = Math.sin(progress * 80) * scrollVelocity * 0.06;
 
       const stripHeight = lerp(20, 220, peelProgress);
       strip.style.height = `${stripHeight}px`;
@@ -102,36 +113,57 @@ function usePeelAnimation(refs) {
       const t = `translate(${translateX}px, ${translateY}px) rotate(${rotate}deg)`;
       strip.style.transform = t;
 
-      tip.style.transform = t;
+      const tipStretch = 1 + pullTension * 0.15 + scrollVelocity * 0.02;
+      const tipTwist = lerp(0, 10, pullTension) + pullShake * 2.2;
+      tip.style.transform = `${t} rotate(${tipTwist}deg) scale(${tipStretch}, ${1 + pullTension * 0.06})`;
       tip.style.top = `${36 - peelProgress * 96}px`;
       tip.style.left = `${1 + peelProgress * 14}px`;
 
-      const woundProgress = clamp((progress - 0.18) / 0.38, 0, 1);
+      const woundProgress = clamp((progress - (peelStart + 0.02)) / 0.34, 0, 1);
       wound.style.opacity = `${woundProgress}`;
       wound.style.transform = `scale(${lerp(0.55, 1.08, woundProgress)})`;
 
-      const tornProgress = clamp((progress - 0.2) / 0.42, 0, 1);
+      const tornProgress = clamp((progress - (peelStart + 0.04)) / 0.38, 0, 1);
       tornSkin.style.opacity = `${tornProgress}`;
       tornSkin.style.transform = `translate(${lerp(-1, 2, tornProgress)}px, ${lerp(
         -1,
         3,
         tornProgress
-      )}px) rotate(${lerp(0, 12, tornProgress)}deg) scale(${lerp(0.5, 1.1, tornProgress)})`;
+      )}px) rotate(${lerp(0, 12, tornProgress) + pullShake * 1.8}deg) scale(${lerp(
+        0.5,
+        1.1,
+        tornProgress
+      ) + scrollVelocity * 0.015})`;
 
+      const tipMorphProgress = clamp((progress - peelStart) / 0.62, 0, 1);
       strip.style.opacity = '0';
-      tip.style.opacity = '0';
+      // 초기 끄스러미가 사라지지 않고 그대로 길어지며 리본의 시작점이 되도록 유지
+      tip.style.opacity = `${sceneVisibility}`;
+      tip.style.width = `${lerp(15, 9, tipMorphProgress)}px`;
+      tip.style.height = `${lerp(30, 64, tipMorphProgress)}px`;
+      tip.style.borderRadius = `${lerp(6, 4, tipMorphProgress)}px ${lerp(6, 4, tipMorphProgress)}px ${lerp(
+        11,
+        8,
+        tipMorphProgress
+      )}px ${lerp(11, 8, tipMorphProgress)}px`;
+      tip.style.boxShadow = `inset 0 -1px 0 rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, ${
+        lerp(0.08, 0.03, tipMorphProgress).toFixed(3)
+      })`;
 
-      const peelStart = 0.2;
       const bloodProgress = clamp((progress - peelStart) / 0.52, 0, 1);
       const bloodHeight = lerp(0, 96, bloodProgress);
       bloodLine.style.opacity = `${bloodProgress}`;
       bloodLine.style.height = `${bloodHeight}px`;
-      bloodLine.style.width = `${lerp(5, 8, bloodProgress)}px`;
+      bloodLine.style.width = `${lerp(5, 8.8, bloodProgress) + scrollVelocity * 0.08}px`;
       bloodLine.style.left = `${lerp(9, 8, bloodProgress)}px`;
 
       const dropProgress = clamp((progress - peelStart) / 0.56, 0, 1);
       bloodDrop.style.opacity = `${dropProgress}`;
-      bloodDrop.style.transform = `translateY(${lerp(0, 72, dropProgress)}px) scale(${lerp(0.7, 0.98, dropProgress)})`;
+      bloodDrop.style.transform = `translate(${Math.sin(progress * 38) * scrollVelocity * 0.45}px, ${lerp(
+        0,
+        72,
+        dropProgress
+      )}px) scale(${lerp(0.7, 1.02, dropProgress)})`;
       bloodDrop.style.width = `${lerp(12, 16, dropProgress)}px`;
       bloodDrop.style.height = `${lerp(14, 20, dropProgress)}px`;
       bloodDrop.style.left = `${lerp(6, 4, dropProgress)}px`;
@@ -143,7 +175,9 @@ function usePeelAnimation(refs) {
       const ribbonHeight = lerp(16, 220, ribbonProgress);
       fleshShreds.style.opacity = `${ribbonProgress}`;
       fleshShreds.style.height = `${ribbonHeight}px`;
-      fleshShreds.style.transform = `translate(${lerp(0, 1.5, ribbonProgress)}px, ${ribbonY}px) rotate(${ribbonRotate}deg)`;
+      fleshShreds.style.transform = `translate(${lerp(0, 1.5, ribbonProgress) + pullShake * 0.8}px, ${
+        ribbonY + Math.abs(pullShake) * 0.25
+      }px) rotate(${ribbonRotate + pullShake * 1.6}deg)`;
 
       if (ribbonPath) {
         const turns = lerp(1.0, 2.7, ribbonProgress);
@@ -157,7 +191,11 @@ function usePeelAnimation(refs) {
           const ratio = i / steps;
           const angle = ratio * turns * Math.PI * 2;
           const localAmp = amp * (1 - ratio * (1 - decay));
-          const x = cx + Math.sin(angle) * localAmp + Math.sin(progress * 6 + ratio * 5) * 0.35;
+          const x =
+            cx +
+            Math.sin(angle) * localAmp +
+            Math.sin(progress * 6 + ratio * 5) * 0.35 +
+            Math.sin(progress * 50 + ratio * 14) * scrollVelocity * 0.18;
           const y = ratio * ribbonHeight + (1 - Math.cos(angle)) * lerp(0.1, 2.6, ribbonProgress);
           points.push([x, y]);
         }
@@ -168,7 +206,10 @@ function usePeelAnimation(refs) {
         }
 
         ribbonPath.setAttribute('d', d);
-        ribbonPath.setAttribute('stroke-width', `${lerp(6.0, 6.0, ribbonProgress)}`);
+        ribbonPath.setAttribute(
+          'stroke-width',
+          `${lerp(5.2, 7.4, ribbonProgress) + Math.sin(progress * 45) * scrollVelocity * 0.08}`
+        );
         ribbonPath.style.opacity = `${ribbonProgress}`;
       }
 
@@ -202,29 +243,43 @@ function usePeelAnimation(refs) {
       const tailFade = 1 - clamp((progress - 0.9) / 0.1, 0, 1) * 0.18;
       const textOpacity = tailFade * transitionFade * sceneVisibility;
       const blur = (1 - transitionFade) * 0.8;
-      const lift = (1 - transitionFade) * 6 - outroProgress * 24;
+      const focusTextOffset = lerp(0, 28, focusProgress) + lerp(0, 14, Math.pow(focusDeep, 1.2));
+      const lift = (1 - transitionFade) * 6 + focusTextOffset - outroProgress * 24;
 
       title.style.opacity = textOpacity;
       sub.style.opacity = textOpacity;
       title.style.transform = `translate(-50%, ${lift}px)`;
-      sub.style.transform = `translate(-50%, ${lift + 2}px)`;
+      sub.style.transform = `translate(-50%, ${lift + 8}px)`;
       title.style.filter = `blur(${blur}px)`;
       sub.style.filter = `blur(${blur}px)`;
 
+      const focusScale =
+        lerp(1, 1.72, focusProgress) + lerp(0, 0.34, Math.pow(focusDeep, 1.25));
+      const outroScale = lerp(1, 0.92, outroProgress);
+      // 포커스 기준을 손톱 중앙으로 이동
+      const focusShiftX = lerp(0, -12, focusProgress) + lerp(0, -12, Math.pow(focusDeep, 1.2));
+      const focusShiftY = lerp(0, 72, focusProgress) + lerp(0, 26, Math.pow(focusDeep, 1.2));
       fingerWrap.style.opacity = `${sceneVisibility}`;
-      fingerWrap.style.transform = `translate(-50%, -50%) scale(${lerp(1, 0.92, outroProgress)})`;
+      fingerWrap.style.transform = `translate(-50%, -50%) translate(${focusShiftX}px, ${focusShiftY}px) scale(${
+        focusScale * outroScale
+      })`;
     }
 
     function tick() {
       ticking = false;
       if (reducedMotion) {
         currentProgress = targetProgress;
+        previousProgress = currentProgress;
+        velocitySmoothed = 0;
         apply(currentProgress);
         return;
       }
 
       const follow = 0.14;
       currentProgress = lerp(currentProgress, targetProgress, follow);
+      const velocityNow = Math.abs(currentProgress - previousProgress) * 120;
+      velocitySmoothed = lerp(velocitySmoothed, velocityNow, 0.28);
+      previousProgress = currentProgress;
       apply(currentProgress);
 
       if (Math.abs(currentProgress - targetProgress) > 0.0005) {
