@@ -1,11 +1,11 @@
 import { NavLink } from 'react-router-dom';
 
 const links = [
-  { to: '/', label: 'Landing' },
-  { to: '/about', label: 'About' },
-  { to: '/code', label: 'Code' },
-  { to: '/pokemon', label: 'Pokemon' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/', label: 'Home' },
+  { to: '/pokemon', label: '원준' },
+  { to: '/code', label: '유정' },
+  { to: '/about', label: '채우' },
+  { to: '/contact', label: '유정' },
 ];
 
 function navClass({ isActive }) {
