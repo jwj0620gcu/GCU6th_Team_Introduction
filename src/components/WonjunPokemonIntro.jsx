@@ -10,16 +10,19 @@ function WonjunPokemonIntro() {
 
   const isIdle = phase === 'idle';
   const isThrowing = phase === 'throwing';
+  const isWobble = phase === 'wobble';
   const isOpening = phase === 'opening';
-  const isGotcha = phase === 'gotcha' || phase === 'reveal';
+  const isGotcha = phase === 'gotcha';
   const isReveal = phase === 'reveal';
+  const isCaptured = isOpening || isGotcha || isReveal;
 
   const buttonLabel = useMemo(() => {
     if (isIdle) return 'Throw Pokeball';
     if (isThrowing) return 'Throwing...';
+    if (isWobble) return 'Shaking...';
     if (isOpening) return 'Capturing...';
     return 'Captured';
-  }, [isIdle, isOpening, isThrowing]);
+  }, [isIdle, isOpening, isThrowing, isWobble]);
 
   useEffect(
     () => () => {
@@ -32,9 +35,10 @@ function WonjunPokemonIntro() {
     if (!isIdle) return;
     setPhase('throwing');
 
-    timersRef.current.push(window.setTimeout(() => setPhase('opening'), 900));
-    timersRef.current.push(window.setTimeout(() => setPhase('gotcha'), 1500));
-    timersRef.current.push(window.setTimeout(() => setPhase('reveal'), 2800));
+    timersRef.current.push(window.setTimeout(() => setPhase('wobble'), 920));
+    timersRef.current.push(window.setTimeout(() => setPhase('opening'), 2720));
+    timersRef.current.push(window.setTimeout(() => setPhase('gotcha'), 3160));
+    timersRef.current.push(window.setTimeout(() => setPhase('reveal'), 4160));
   }
 
   return (
@@ -43,7 +47,7 @@ function WonjunPokemonIntro() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_25%,rgba(255,255,255,0.18),transparent_45%),linear-gradient(180deg,#79beff_0%,#a4de7a_62%,#5da444_100%)]" />
 
         <motion.div
-          className="absolute left-1/2 top-1/2 z-[5] h-40 w-40 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white/70 bg-white/15 shadow-[0_16px_32px_rgba(0,0,0,0.35)] md:h-48 md:w-48"
+          className="absolute left-1/2 top-1/2 z-[3] h-40 w-40 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white/70 bg-white/15 shadow-[0_16px_32px_rgba(0,0,0,0.35)] md:h-48 md:w-48"
           animate={
             isIdle
               ? { y: [0, -14, 0] }
@@ -57,7 +61,7 @@ function WonjunPokemonIntro() {
               : { duration: 0.65, ease: 'easeIn' }
           }
         >
-          {!isGotcha && (
+          {!isCaptured && (
             <img
               src={photoSrc}
               alt="Wonjun Jung dummy"
@@ -75,9 +79,20 @@ function WonjunPokemonIntro() {
               animate={
                 isThrowing
                   ? { x: ['0vw', '9vw', '0vw'], y: ['0vh', '-30vh', '-43vh'], rotate: [0, 240, 430], scale: [1, 0.92, 0.82] }
+                  : isWobble
+                    ? {
+                        x: [0, -10, 10, -9, 9, -8, 8, 0],
+                        y: '-43vh',
+                        rotate: [430, 402, 456, 410, 450, 414, 446, 430],
+                        scale: [0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82],
+                      }
                   : { x: 0, y: '-43vh', rotate: 430, scale: 0.82 }
               }
-              transition={{ duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}
+              transition={
+                isWobble
+                  ? { duration: 1.75, ease: 'easeInOut' }
+                  : { duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }
+              }
             >
               <div className="relative h-full w-full overflow-visible rounded-full">
                 <motion.span
