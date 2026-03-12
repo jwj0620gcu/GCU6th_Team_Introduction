@@ -90,8 +90,8 @@
                       <div class="player-banner-copy">
                         <strong class="player-banner-title">전유정 | Product Builder</strong>
                         <p class="player-banner-text">
-                          사용자가 멈추는 지점을 찾고, 그 순간을 더 자연스러운 흐름으로
-                          다시 설계하는 사람입니다.
+                          사용자 경험에서 막히는 지점을 발견하고,
+                          더 자연스러운 흐름으로 정리하는 데 관심이 있습니다.
                         </p>
                       </div>
                       <dl class="stats player-banner-stats">
@@ -110,8 +110,8 @@
                     <div class="card-h">MISSION</div>
                     <div class="card-b">
                       <p class="lead">
-                        처음에는 일부러 작은 불편을 남겨두었습니다. 지금부터는 그 불편이 어디에서
-                        시작됐는지, 그리고 저는 그것을 어떻게 읽는 사람인지 보여드리겠습니다.
+                        첫 화면에는 일부러 작은 불편을 넣었습니다.
+                        이제부터는 그 요소가 왜 필요했는지, 그리고 저는 그런 문제를 어떻게 정리하는지 설명합니다.
                       </p>
                       <div class="quest" aria-label="퀘스트">
                         <div class="quest-item">
@@ -123,14 +123,14 @@
                           <span class="q-sub">작은 지연과 애매한 선택지가 사용자를 어떻게 멈추게 하는지 봅니다.</span>
                         </div>
                         <div class="quest-item">
-                          <span class="q-title">저는 그 멈춤을 문제로 읽는 사람입니다</span>
+                          <span class="q-title">저는 그런 멈춤을 사용자 경험의 문제로 보고 정리합니다</span>
                           <span class="q-sub">그리고 그 지점을 더 자연스러운 흐름으로 바꾸는 방식으로 일합니다.</span>
                         </div>
                       </div>
                       <div class="actions">
                         <button id="btnStart" class="btn primary" type="button">불편을 끝까지 체험하기</button>
-                        <button id="btnSkip" class="btn ghost" type="button" title="정석 포트폴리오 바로 열기">
-                          편한 버전 바로 보기
+                        <button id="btnSkip" class="btn ghost" type="button" title="스킵은 사용할 수 없습니다">
+                          스킵 불가
                         </button>
                       </div>
                       <p id="frictionHint" class="friction-hint">
@@ -155,7 +155,7 @@
                     <div class="dialog-h">NPC: PORTFOLIO</div>
                     <div class="dialog-b">
                       <p id="dialogText" class="mono">
-                        “조금 천천히 시작하지만, 뒤로 갈수록 훨씬 편하게 보실 수 있도록 준비했습니다.”
+                        “처음에는 조금 낯설 수 있지만, 뒤로 갈수록 더 편하게 보실 수 있습니다.”
                       </p>
                     </div>
                   </div>
@@ -170,25 +170,10 @@
                 <div class="card-b">
                   <p id="reasonText" class="lead"></p>
                   <ul class="bullets">
-                    <li>설명보다 먼저 불편을 직접 체감하게 만들기</li>
-                    <li>사용자가 멈추는 지점을 문제로 읽는 기준 보여주기</li>
-                    <li>같은 메시지를 불편한 경험과 편한 경험으로 대비해 보여주기</li>
+                    <li>설명보다 먼저 작은 불편을 직접 경험하게 하기</li>
+                    <li>사용자가 어디에서 멈추는지 보여주기</li>
+                    <li>같은 내용을 다른 UX 방식으로 비교해 보여주기</li>
                   </ul>
-
-                  <div class="works" aria-label="프로젝트 레벨">
-                    <a class="work" href="#pf-projects">
-                      <span class="w-title">같이 키우기</span>
-                      <span class="w-meta">AI 기반 역할 분담 서비스</span>
-                    </a>
-                    <a class="work" href="#pf-projects">
-                      <span class="w-title">FakeFilter</span>
-                      <span class="w-meta">비판적 사고를 학습하는 인터랙티브 게임</span>
-                    </a>
-                    <a class="work" href="#pf-projects">
-                      <span class="w-title">Off Duty</span>
-                      <span class="w-meta">군인 휴가 의류 대여 서비스</span>
-                    </a>
-                  </div>
 
                   <div class="checkpoint-map" aria-label="포트폴리오 진입 단계">
                     <button
@@ -218,14 +203,6 @@
                       마지막 문 열기
                     </button>
                   </div>
-                  <div class="comfort-switch">
-                    <button id="btnOpenNow" class="btn comfort-btn" type="button">
-                      이제 편한 흐름으로 바로 열기
-                    </button>
-                    <p class="comfort-caption">
-                      여기까지 느낀 불편이면 충분합니다. 아래부터는 같은 내용을 더 쉽고 빠르게 읽히는 구조로 보여드립니다.
-                    </p>
-                  </div>
                   <div class="actions">
                     <button id="btnRestart" class="btn ghost" type="button">RESTART</button>
                   </div>
@@ -253,9 +230,9 @@
 
         <section id="pf-intro" class="pf-section pf-section-splash reveal" data-section="intro" data-reveal>
           <div class="pf-copy">
-            <p class="pf-copy-line">조금 전, 버튼을 누르는 과정이 매끄럽지 않으셨을 겁니다.</p>
-            <p class="pf-copy-line">어디를 눌러야 하는지 잠깐 멈칫한 순간도 있었을 수 있습니다.</p>
-            <p class="pf-copy-line">저는 바로 그런 멈춤을 찾아 문제로 다시 정의하는 사람입니다.</p>
+            <p class="pf-copy-line">조금 전, 버튼을 누르는 과정이 매끄럽지 않았을 수 있습니다.</p>
+            <p class="pf-copy-line">어디를 눌러야 할지 잠깐 멈춘 순간도 있었을 겁니다.</p>
+            <p class="pf-copy-line">저는 그런 순간이 왜 생기는지 먼저 정리하는 사람입니다.</p>
           </div>
           <button class="pf-next" type="button" data-target="hero">이제 저를 소개하겠습니다</button>
         </section>
@@ -263,10 +240,10 @@
         <section id="pf-hero" class="pf-hero reveal" data-reveal>
           <div class="pf-kicker">LEVEL 2. NOW IT GETS EASIER</div>
           <h2 class="pf-title">전유정</h2>
-          <p class="pf-sub">사용자가 멈추는 지점을 찾아, 더 자연스러운 흐름으로 바꾸는 기획자입니다.</p>
+          <p class="pf-sub">사용자가 불편을 느끼는 지점을 찾아, 더 자연스러운 흐름으로 정리하는 기획자입니다.</p>
           <p class="pf-desc">
-            앞에서는 일부러 헤매게 만들었습니다. 여기서부터는 반대로, 필요한 정보가 바로 읽히고
-            다음 행동이 빠르게 보이도록 정리했습니다. 저는 이런 대비를 설계하는 사람입니다.
+            앞부분에는 의도적인 불편을 넣었고, 여기서부터는 정보를 더 쉽게 읽을 수 있도록 구조를 바꿨습니다.
+            저는 이런 차이를 만드는 과정에 관심이 있습니다.
           </p>
           <div class="pf-comfort-bar" aria-label="경험 전환 안내">
             <span>불편 체험 완료</span>
@@ -288,18 +265,18 @@
           <div class="pf-summary-grid reveal" data-reveal>
             <article class="pf-summary-card">
               <span class="pf-mini-label">What I Do</span>
-              <strong>불편을 문제로 번역합니다.</strong>
-              <p>사용자가 왜 멈췄는지 감각이 아니라 구조로 다시 정리합니다.</p>
+              <strong>불편이 생기는 이유를 정리합니다.</strong>
+              <p>사용자가 왜 멈췄는지 감각이 아니라 흐름과 구조의 문제로 정리합니다.</p>
             </article>
             <article class="pf-summary-card">
               <span class="pf-mini-label">How I Work</span>
-              <strong>가설보다 검증을 먼저 봅니다.</strong>
-              <p>타깃, 실제 불편, 우선순위를 다시 확인해 방향을 분명히 만듭니다.</p>
+              <strong>아이디어보다 검증 가능성을 먼저 봅니다.</strong>
+              <p>타깃과 실제 불편, 우선순위를 다시 확인해 방향을 분명히 합니다.</p>
             </article>
             <article class="pf-summary-card">
               <span class="pf-mini-label">Why Me</span>
-              <strong>기획과 실행 사이를 잇습니다.</strong>
-              <p>문제 정의에 머무르지 않고 다음 화면과 다음 행동까지 연결합니다.</p>
+              <strong>기획이 실제 결과물로 이어지도록 정리합니다.</strong>
+              <p>문제 정의에서 끝나지 않고, 다음 화면과 다음 행동까지 연결하려고 합니다.</p>
             </article>
           </div>
           <div class="pf-progress" aria-label="포트폴리오 빠른 안내">
@@ -312,27 +289,37 @@
         </section>
 
         <section id="pf-about" class="pf-section pf-story" data-section="about">
-          <div class="pf-story-block reveal" data-reveal>
+          <div class="pf-story-block pf-story-lead reveal" data-reveal>
             <div class="pf-section-label">About</div>
-            <h3 class="pf-story-title">기획이 재미있다고 느낀 건, 빠르게 만드는 경험보다 문제를 정의하는 일이 더 중요하다는 걸 알게 되면서였습니다.</h3>
-            <p class="pf-story-text">
-              첫 해커톤 이후 2년 동안 10번이 넘는 해커톤과 창업 경진대회에 참여하며, 아이디어를
-              빠르게 구현하는 경험을 반복했습니다.
-            </p>
+            <h3 class="pf-story-title">여러 프로젝트를 거치며, 빠르게 만드는 것보다 무엇을 왜 만드는지 정리하는 일이 더 중요하다고 느끼게 됐습니다.</h3>
+            <div class="pf-story-highlight">
+              <span class="pf-mini-label">Key Point</span>
+              <strong>빠른 구현보다 문제를 먼저 분명히 하는 방식으로 일합니다.</strong>
+            </div>
           </div>
 
-          <div class="pf-story-block reveal delay-1" data-reveal>
-            <p class="pf-story-text">
-              그 과정에서 자연스럽게 팀의 기획과 PM 역할을 맡았고, 기능을 더하는 일보다 어떤 문제를
-              풀고 있는지 먼저 분명히 하는 일이 더 중요하다는 기준이 생겼습니다.
-            </p>
-          </div>
-
-          <div class="pf-story-block reveal delay-2" data-reveal>
-            <p class="pf-story-text">
-              그래서 프로젝트를 시작하면 기능보다 먼저 대상, 실제 불편, 그리고 우리가 세운 가설이
-              검증 가능한지부터 다시 확인합니다.
-            </p>
+          <div class="pf-story-steps reveal delay-1" data-reveal>
+            <article class="pf-story-step">
+              <span class="pf-mini-label">Experience</span>
+              <p class="pf-story-text">
+                첫 해커톤 이후 2년 동안 10번이 넘는 해커톤과 창업 경진대회에 참여하며, 아이디어를
+                빠르게 구현하는 경험을 반복했습니다.
+              </p>
+            </article>
+            <article class="pf-story-step">
+              <span class="pf-mini-label">Shift</span>
+              <p class="pf-story-text">
+                그 과정에서 자연스럽게 팀의 기획과 PM 역할을 맡았고, 기능을 더하는 일보다 어떤 문제를
+                풀고 있는지 먼저 분명히 하는 일이 더 중요하다는 기준이 생겼습니다.
+              </p>
+            </article>
+            <article class="pf-story-step">
+              <span class="pf-mini-label">How I Work</span>
+              <p class="pf-story-text">
+                그래서 프로젝트를 시작하면 기능보다 먼저 대상, 실제 불편, 그리고 우리가 세운 가설이
+                검증 가능한지부터 다시 확인합니다.
+              </p>
+            </article>
           </div>
 
           <div class="pf-mini-cards reveal delay-3" data-reveal>
@@ -354,27 +341,27 @@
         <section id="pf-strength" class="pf-section pf-section-stack" data-section="strength">
           <div class="pf-section-heading reveal" data-reveal>
             <div class="pf-section-label">Strength</div>
-            <h3 class="pf-section-title">저는 아이디어를 더하는 사람보다, 방향이 맞는지 다시 점검하는 사람에 가깝습니다.</h3>
+            <h3 class="pf-section-title">저는 새로운 아이디어를 덧붙이기보다, 지금 방향이 맞는지 점검하는 역할에 더 가깝습니다.</h3>
           </div>
 
           <div class="pf-stack">
             <article class="pf-stack-card reveal" data-reveal>
               <span class="pf-stack-index">01</span>
-              <h4>문제를 한 문장으로 다시 씁니다.</h4>
+              <h4>문제를 더 분명한 문장으로 정리합니다.</h4>
               <p>
                 해결하려는 대상이 누구인지, 실제 불편이 무엇인지, 지금의 가설이 사실에 가까운지부터 다시 정리합니다.
               </p>
             </article>
             <article class="pf-stack-card reveal delay-1" data-reveal>
               <span class="pf-stack-index">02</span>
-              <h4>방향이 어긋나면 멈추고 다시 설계합니다.</h4>
+              <h4>방향이 맞지 않다고 판단되면, 문제 정의부터 다시 점검합니다.</h4>
               <p>
                 한 프로젝트에서는 타깃 전제가 맞지 않을 수 있다는 인터뷰 피드백을 받고, 솔루션보다 문제 정의부터 다시 세운 경험이 있습니다.
               </p>
             </article>
             <article class="pf-stack-card reveal delay-2" data-reveal>
               <span class="pf-stack-index">03</span>
-              <h4>회의와 실행 사이를 연결합니다.</h4>
+              <h4>논의가 실제 실행으로 이어지도록 정리합니다.</h4>
               <p>
                 팀 안에서는 무엇이 사실이고 무엇이 가정인지 구분한 뒤, 실행 단계를 나누어 실제 결과물까지 이어지도록 만드는 역할을 맡아왔습니다.
               </p>
@@ -515,9 +502,9 @@
         <section id="pf-contact" class="pf-section pf-section-contact" data-section="contact">
           <div class="pf-contact-card reveal" data-reveal>
             <div class="pf-section-label">Contact</div>
-            <h3 class="pf-section-title">대화를 이어가고 싶다면, 여기서 가장 빠르게 연결됩니다.</h3>
+            <h3 class="pf-section-title">CONTACT ME</h3>
             <p class="pf-desc">
-              필요한 채널만 바로 찾을 수 있도록 정리했습니다. 편하게 연락 주시면 더 이야기해보고 싶습니다.
+              필요한 채널만 바로 확인할 수 있도록 정리했습니다. 협업이나 프로젝트 관련 연락은 아래로 부탁드립니다.
             </p>
             <ul class="pf-contact-list">
               <li><strong>이메일</strong><a href="mailto:chunyj512@gmail.com">chunyj512@gmail.com</a></li>

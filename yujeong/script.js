@@ -2,7 +2,7 @@ const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
 const REASON_TEXT =
-  "방금의 경험이 실수처럼 느껴졌다면 의도는 성공한 셈입니다. 기다려야 했던 순간, 어디를 눌러야 할지 망설였던 장면, 저는 바로 그 멈춤을 문제로 읽고 더 자연스러운 흐름으로 바꾸는 사람입니다.";
+  "방금의 경험이 불편하게 느껴졌다면 의도는 전달된 셈입니다. 기다려야 했던 순간과 어디를 눌러야 할지 망설였던 장면은, 사용자가 어디에서 멈추는지 보여주기 위한 장치였습니다.";
 
 const state = {
   screen: "boot",
@@ -15,6 +15,7 @@ const state = {
   checkpointStep: 1,
   bootDeniedAttempts: 0,
   startDodgeCount: 0,
+  dodgePhase: 0,
   introFrictionActive: true,
   introTyped: false,
 };
@@ -77,7 +78,7 @@ function onBootAdvance() {
   }
   appendLog("BOOT COMPLETE", "ok");
   showScreen("play");
-  document.body.classList.remove("mode-portfolio");
+  setComfortMode(false);
   $("#btnStart")?.focus();
 }
 
@@ -147,8 +148,16 @@ function setComfortMode(enabled) {
   document.body.classList.toggle("mode-portfolio", enabled);
 }
 
-function setComfortSwitchHidden(hidden) {
-  $("#btnOpenNow")?.closest(".comfort-switch")?.classList.toggle("is-hidden", hidden);
+function resetExperienceState() {
+  state.storyRunning = false;
+  state.startDodgeCount = 0;
+  state.dodgePhase = 0;
+  state.introFrictionActive = true;
+  state.introTyped = false;
+  $("#play .actions")?.classList.remove("is-dodging-a", "is-dodging-b", "is-dodging-c");
+  setComfortMode(false);
+  setFrictionHint("힌트: 처음엔 원하는 버튼이 쉽게 잡히지 않도록 해두었습니다.");
+  setPortfolioDelayText("화면 안에 나타나는 버튼을 순서대로 눌러 주세요. 각 단계는 5초씩 걸립니다.");
 }
 
 function resetCheckpointButtons() {
@@ -174,7 +183,6 @@ function resetCheckpointButtons() {
   if (buttons[1]) buttons[1].textContent = "첫 번째 문 열기";
   if (buttons[2]) buttons[2].textContent = "두 번째 문 열기";
   if (buttons[3]) buttons[3].textContent = "마지막 문 열기";
-  setComfortSwitchHidden(false);
 }
 
 function startReasonTyping() {
@@ -256,7 +264,7 @@ async function onContinue() {
   if (state.storyRunning) return;
   state.storyRunning = true;
   state.introFrictionActive = false;
-  $("#play .actions")?.classList.remove("friction-swap");
+  $("#play .actions")?.classList.remove("is-dodging-a", "is-dodging-b", "is-dodging-c");
   setFrictionHint("이제부터는 의도를 설명하고, 다음 장면으로 넘어갑니다.");
 
   const btn = $("#btnStart");
@@ -278,10 +286,21 @@ async function onContinue() {
   showScreen("reason");
   await startReasonTyping();
   resetCheckpointButtons();
-  setPortfolioDelayText("아직도 약간 번거롭게 남겨두었습니다. 순서대로 눌러도 되고, 바로 아래 버튼으로 편한 흐름을 열어도 됩니다.");
+  setPortfolioDelayText("순서대로 버튼을 누르면 다음 화면으로 이어집니다.");
   $("#checkpointOne")?.focus();
   setButtonBusy(btn, false);
   state.storyRunning = false;
+}
+
+function moveActionButtons() {
+  const actions = $("#play .actions");
+  if (!actions) return;
+
+  const phases = ["is-dodging-a", "is-dodging-b", "is-dodging-c"];
+  actions.classList.remove(...phases);
+  const nextPhase = phases[state.dodgePhase % phases.length];
+  actions.classList.add(nextPhase);
+  state.dodgePhase += 1;
 }
 
 function startCheckpoint(step) {
@@ -296,7 +315,6 @@ function startCheckpoint(step) {
   if (!currentButton) return;
 
   state.checkpointRunning = true;
-  setComfortSwitchHidden(true);
   const token = ++state.checkpointToken;
   currentButton.disabled = true;
   appendLog(`CHECKPOINT ${step} STARTED`, "warn");
@@ -478,58 +496,45 @@ function wireUI() {
   });
 
   $("#btnStart")?.addEventListener("mouseenter", () => {
-    const actions = $("#play .actions");
-    if (!actions || !state.introFrictionActive || state.startDodgeCount >= 2) return;
+    if (!state.introFrictionActive || state.startDodgeCount >= 4) return;
     state.startDodgeCount += 1;
-    actions.classList.toggle("friction-swap");
+    moveActionButtons();
     appendLog("CTA MOVED", "warn");
     setFrictionHint(
       state.startDodgeCount === 1
         ? "조금 헷갈리셨다면 의도대로 작동 중입니다."
-        : "원하는 행동이 바로 잡히지 않는 순간을 일부러 만들었습니다."
+        : "버튼이 바로 잡히지 않도록 위치를 계속 바꾸고 있습니다."
     );
   });
 
   $("#btnSkip")?.addEventListener("mouseenter", () => {
-    if (!state.introFrictionActive || state.startDodgeCount >= 3) return;
+    if (!state.introFrictionActive || state.startDodgeCount >= 5) return;
     state.startDodgeCount += 1;
-    $("#play .actions")?.classList.toggle("friction-swap");
-    appendLog("CHOICE SHIFTED", "warn");
-    setFrictionHint("선택지가 안정적으로 보이지 않는 경험도 초반 장치입니다.");
+    moveActionButtons();
+    appendLog("SKIP EVADED", "warn");
+    setDialog("“이 단계에서는 스킵할 수 없습니다.”");
+    setFrictionHint("스킵 버튼은 초반 흐름에서 바로 선택되지 않도록 움직입니다.");
+  });
+
+  $("#btnSkip")?.addEventListener("focus", () => {
+    if (!state.introFrictionActive) return;
+    setDialog("“이 단계에서는 스킵할 수 없습니다. 끝까지 진행해 주세요.”");
   });
 
   $("#btnRestart")?.addEventListener("click", () => {
     appendLog("RESTARTING...", "warn");
     showScreen("boot");
     $("#portfolio")?.classList.add("is-hidden");
-    setComfortMode(false);
-    state.storyRunning = false;
-    state.startDodgeCount = 0;
-    state.introFrictionActive = true;
-    $("#play .actions")?.classList.remove("friction-swap");
-    setFrictionHint("힌트: 처음엔 원하는 버튼이 쉽게 잡히지 않도록 해두었습니다.");
+    resetExperienceState();
     resetCheckpointButtons();
-    setPortfolioDelayText("화면 안에 나타나는 버튼을 순서대로 눌러 주세요. 각 단계는 5초씩 걸립니다.");
     initBootDelay();
   });
 
   $("#btnSkip")?.addEventListener("click", () => {
-    appendLog("DIRECT COMFORT MODE", "ok");
-    state.introFrictionActive = false;
-    $("#play .actions")?.classList.remove("friction-swap");
-    setDialog("“불편 체험은 여기까지입니다. 이제부터는 바로 읽히는 구조로 보여드리겠습니다.”");
-    showScreen("reason");
-    startReasonTyping().then(() => {
-      resetCheckpointButtons();
-      openPortfolio("intro");
-    });
-  });
-
-  $("#btnOpenNow")?.addEventListener("click", () => {
-    appendLog("COMFORT SWITCH", "ok");
-    setPortfolioDelayText("이제부터는 찾지 않아도 보이는 구조로 바뀝니다.");
-    setComfortSwitchHidden(true);
-    openPortfolio("intro");
+    appendLog("SKIP DISABLED", "bad");
+    bump($("#btnSkip"));
+    setDialog("“이 구간은 스킵할 수 없습니다. 끝까지 진행해 주세요.”");
+    setFrictionHint("스킵은 사용할 수 없습니다. 처음부터 순서대로 진행해 주세요.");
   });
 
   $("#checkpointOne")?.addEventListener("click", () => startCheckpoint(1));
@@ -553,13 +558,6 @@ function wireUI() {
     });
   });
 
-  $$(".work").forEach((work) => {
-    work.addEventListener("click", (event) => {
-      event.preventDefault();
-      openPortfolio("projects");
-    });
-  });
-
   window.addEventListener("keydown", (event) => {
     if (state.screen === "boot" && event.code === "Space") {
       event.preventDefault();
@@ -576,12 +574,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initBootDelay();
   resetCheckpointButtons();
   showScreen("boot");
-  setComfortMode(false);
+  resetExperienceState();
   document.body.classList.remove("fx-off");
-  state.startDodgeCount = 0;
-  state.introFrictionActive = true;
-  state.introTyped = false;
-  setFrictionHint("힌트: 처음엔 원하는 버튼이 쉽게 잡히지 않도록 해두었습니다.");
   setDialog("“조금 천천히 시작하지만, 곧 자연스럽게 이어지는 흐름으로 바뀝니다.”");
-  setPortfolioDelayText("화면 안에 나타나는 버튼을 순서대로 눌러 주세요. 각 단계는 5초씩 걸립니다.");
 });
