@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 const links = [
   { to: '/', label: 'Landing' },
+  { to: '/jaebin', label: 'Jaebin' },
   { to: '/about', label: 'About' },
   { to: '/code', label: 'Code' },
   { to: '/contact', label: 'Contact' },
@@ -19,8 +20,8 @@ function TopBar() {
   return (
     <header className="fixed inset-x-0 top-0 z-[100] border-b border-white/10 bg-black/70 backdrop-blur-md" role="banner">
       <div className="mx-auto flex h-14 w-[min(1100px,calc(100%-48px))] items-center justify-between">
-        <NavLink to="/" aria-label="Peel Landing 홈" className="font-black tracking-[-0.05em]">
-          PEEL
+        <NavLink to="/jaebin" aria-label="Jaebin 페이지 홈" className="font-black tracking-[-0.05em]">
+          JAEBIN
         </NavLink>
         <nav aria-label="주요 메뉴" className="flex items-center gap-2">
           {links.map((link) => (

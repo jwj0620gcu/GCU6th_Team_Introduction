@@ -3,6 +3,7 @@ import TopBar from './components/TopBar';
 import AboutPage from './pages/AboutPage';
 import CodePage from './pages/CodePage';
 import ContactPage from './pages/ContactPage';
+import JaebinPage from './pages/JaebinPage';
 import LandingPage from './pages/LandingPage';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <main className="pt-14">
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/jaebin" element={<JaebinPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/code" element={<CodePage />} />
           <Route path="/contact" element={<ContactPage />} />
