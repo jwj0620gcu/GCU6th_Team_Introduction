@@ -4,6 +4,7 @@ import AboutPage from './pages/AboutPage';
 import CodePage from './pages/CodePage';
 import ContactPage from './pages/ContactPage';
 import LandingPage from './pages/LandingPage';
+import WonjunPokemonPage from './pages/WonjunPokemonPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/code" element={<CodePage />} />
+          <Route path="/pokemon" element={<WonjunPokemonPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
