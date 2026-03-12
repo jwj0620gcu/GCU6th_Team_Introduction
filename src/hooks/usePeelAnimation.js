@@ -246,7 +246,8 @@ function usePeelAnimation(refs) {
       const textOpacity = tailFade * transitionFade * sceneVisibility;
       const blur = (1 - transitionFade) * 0.8;
       const focusTextOffset = lerp(0, 28, focusProgress) + lerp(0, 14, Math.pow(focusDeep, 1.2));
-      const lift = (1 - transitionFade) * 6 + focusTextOffset - outroProgress * 24;
+      const textRiseY = lerp(0, -124, riseProgress);
+      const lift = (1 - transitionFade) * 6 + focusTextOffset + textRiseY - outroProgress * 24;
 
       title.style.opacity = textOpacity;
       sub.style.opacity = textOpacity;
