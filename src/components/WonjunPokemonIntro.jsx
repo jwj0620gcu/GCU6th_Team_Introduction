@@ -17,11 +17,11 @@ function WonjunPokemonIntro() {
   const isCaptured = isOpening || isGotcha || isReveal;
 
   const buttonLabel = useMemo(() => {
-    if (isIdle) return 'Throw Pokeball';
+    if (isIdle) return '몬스터볼 던지기';
     if (isThrowing) return 'Throwing...';
     if (isWobble) return 'Shaking...';
     if (isOpening) return 'Capturing...';
-    return 'Captured';
+    return '잡았다!';
   }, [isIdle, isOpening, isThrowing, isWobble]);
 
   useEffect(
@@ -47,10 +47,10 @@ function WonjunPokemonIntro() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_25%,rgba(255,255,255,0.18),transparent_45%),linear-gradient(180deg,#79beff_0%,#a4de7a_62%,#5da444_100%)]" />
 
         <motion.div
-          className="absolute left-1/2 top-1/2 z-[3] h-40 w-40 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white/70 bg-white/15 shadow-[0_16px_32px_rgba(0,0,0,0.35)] md:h-48 md:w-48"
+          className="absolute left-1/2 top-[32%] z-[3] h-24 w-24 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white/70 bg-white/15 shadow-[0_12px_28px_rgba(0,0,0,0.35)] md:h-28 md:w-28"
           animate={
             isIdle
-              ? { y: [0, -14, 0] }
+              ? { y: [0, -10, 0], scale: [0.92, 0.95, 0.92] }
               : isOpening || isGotcha
                 ? { y: 0, scale: [1, 0.28, 0], opacity: [1, 0.8, 0], filter: ['blur(0px)', 'blur(2px)', 'blur(5px)'] }
                 : { y: 0 }
@@ -128,7 +128,7 @@ function WonjunPokemonIntro() {
                   GOTCHA!
                 </p>
                 <p className="mt-2 text-xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)] md:text-3xl">
-                  You caught Wonjun Jung!
+                  정원준을 잡았습니다!
                 </p>
               </motion.div>
             )}
@@ -148,23 +148,28 @@ function WonjunPokemonIntro() {
 
         <AnimatePresence>
           {isReveal && (
-            <motion.article
-              initial={{ opacity: 0, y: 18, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="absolute left-1/2 top-1/2 z-[11] w-[min(560px,calc(100%-24px))] -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/20 bg-[#0a1224]/90 p-5 text-white shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur"
-            >
-              <h2 className="text-3xl font-black tracking-[-0.03em]">Wonjun Jung</h2>
-              <p className="mt-1 text-white/75">Software Engineering student</p>
-              <h3 className="mt-4 text-sm font-bold text-white/85">Interests</h3>
-              <ul className="mt-1 list-disc space-y-1 pl-5 text-white/90">
-                <li>React</li>
-                <li>Startup ideas</li>
-                <li>AI products</li>
-                <li>Travel apps</li>
-              </ul>
-            </motion.article>
+            <div className="absolute left-1/2 top-1/2 z-[11] w-[min(560px,calc(100%-24px))] -translate-x-1/2 -translate-y-1/2">
+              <motion.article
+                initial={{ opacity: 0, y: 18, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                className="flex flex-col items-center rounded-2xl border border-white/20 bg-[#0a1224]/90 p-5 text-center text-white shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur"
+              >
+                <h2 className="text-5xl font-black tracking-[-0.04em]">정원준</h2>
+                <p className="mt-2 text-3xl font-extrabold tracking-[-0.02em] text-white/92">
+                  기획자&프론트엔드 개발자
+                </p>
+                <p className="mt-1 text-2xl font-bold text-white/88">소프트웨어학과</p>
+                <p className="mt-1 text-2xl font-bold text-cyan-300">ESTP</p>
+                <h3 className="mt-3 text-xl font-bold text-white/90">취미</h3>
+                <ul className="mt-2 space-y-1 text-lg font-semibold text-white/90">
+                  <li>야구</li>
+                  <li>FC서울 직관</li>
+                  <li>등산</li>
+                </ul>
+              </motion.article>
+            </div>
           )}
         </AnimatePresence>
       </div>
