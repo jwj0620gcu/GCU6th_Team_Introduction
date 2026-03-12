@@ -649,30 +649,37 @@ kbd {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  width: 100%;
+}
+
+.actions.is-dodging-a,
+.actions.is-dodging-b,
+.actions.is-dodging-c {
+  justify-content: flex-end;
 }
 
 .actions.is-dodging-a #btnStart {
-  transform: translate(22px, -4px);
+  transform: translateX(48px);
 }
 
 .actions.is-dodging-a #btnSkip {
-  transform: translate(-28px, 8px);
+  transform: translateX(164px);
 }
 
 .actions.is-dodging-b #btnStart {
-  transform: translate(-16px, 10px);
+  transform: translateX(84px);
 }
 
 .actions.is-dodging-b #btnSkip {
-  transform: translate(34px, -10px);
+  transform: translateX(220px);
 }
 
 .actions.is-dodging-c #btnStart {
-  transform: translate(28px, 12px);
+  transform: translateX(120px);
 }
 
 .actions.is-dodging-c #btnSkip {
-  transform: translate(-36px, -12px);
+  transform: translateX(280px);
 }
 
 .friction-hint {
