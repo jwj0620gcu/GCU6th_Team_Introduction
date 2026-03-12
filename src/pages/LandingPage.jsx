@@ -73,7 +73,6 @@ function LandingPage() {
                 <div ref={refs.bloodDropRef} className="blood-drop" />
                 <div ref={refs.fleshShredsRef} className="flesh-shreds" />
 
-                <div className="hangnail-root" />
                 <div ref={refs.stripRef} className="hangnail-strip" />
                 <div ref={refs.tipRef} className="tear-tip" />
               </div>
@@ -88,10 +87,21 @@ function LandingPage() {
 
       <section ref={refs.nextSectionRef} className="next">
         <div className="next-inner -translate-y-2 md:-translate-y-4">
-          <h2 className="mt-1 text-4xl font-black tracking-[-0.06em] md:text-6xl">우리 팀원 자기소개 요약</h2>
+          <h2 className="mt-1 text-4xl font-black tracking-[-0.06em] md:text-6xl">우리 팀원 자기소개 </h2>
           <p className="next-lead">
-            각 방으로 들어가기 전, 팀원 4명의 핵심 역할과 강점을 먼저 빠르게 확인하세요.
+            문제를 해결하기 위해 모인 네 명의 창업가
           </p>
+
+          <section className="mx-auto mt-6 w-full max-w-4xl text-left">
+            <article className="card mt-3 overflow-hidden rounded-2xl border border-white/10 bg-white/6">
+              <img
+                src="/members/group-dummy.svg"
+                alt="팀 단체사진 더미"
+                className="h-auto w-full object-cover"
+                loading="lazy"
+              />
+            </article>
+          </section>
 
           <div className="mt-6 grid grid-cols-1 gap-4 text-left md:grid-cols-2">
             {members.map((member) => (
