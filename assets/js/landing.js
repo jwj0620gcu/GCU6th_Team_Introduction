@@ -1,138 +1,107 @@
-(() => {
-  const hero = document.getElementById("hero");
-  const strip = document.getElementById("strip");
-  const tip = document.getElementById("tip");
-  const wound = document.getElementById("wound");
-  const bloodLine = document.getElementById("bloodLine");
-  const bloodDrop = document.getElementById("bloodDrop");
-  const title = document.getElementById("title");
-  const sub = document.getElementById("sub");
+// Slaughter: One-Page Progression Logic
 
-  if (!hero || !strip || !tip || !wound || !bloodLine || !bloodDrop || !title || !sub) return;
+let bloodLevel = 20;
+const statusText = document.getElementById('statusText');
+const bloodLevelEl = document.getElementById('bloodLevel');
+const bloodOverlay = document.getElementById('bloodOverlay');
+const body = document.getElementById('gameBody');
+const heart = document.getElementById('heart');
+const gameMsg = document.getElementById('gameMsg');
+const introContainer = document.getElementById('intro');
 
-  const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-
-  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-  const lerp = (a, b, t) => a + (b - a) * t;
-
-  let total = 0;
-  let targetProgress = 0;
-  let currentProgress = 0;
-  let ticking = false;
-
-  function measure() {
-    total = hero.offsetHeight - window.innerHeight;
-    total = Math.max(0, total);
+function updateUI() {
+  bloodLevelEl.textContent = `${Math.floor(bloodLevel)}%`;
+  
+  if (bloodLevel < 40) {
+    statusText.textContent = '피의 허기 (Lacks blood)';
+    statusText.style.color = 'var(--fresh-blood)';
+  } else if (bloodLevel < 80) {
+    statusText.textContent = '추출 진행 중 (Extracting)';
+    statusText.style.color = 'var(--accent-red)';
+  } else if (bloodLevel < 100) {
+    statusText.textContent = '폭주 직전 (Satiated)';
+    statusText.style.color = '#FFD700';
+  } else {
+    statusText.textContent = '도륙 완료 (SLAUGHTERED)';
+    statusText.style.color = '#FFFFFF';
+    introContainer.classList.add('intro-active');
   }
 
-  function computeTargetProgress() {
-    const rect = hero.getBoundingClientRect();
-    const scrolled = clamp(-rect.top, 0, total);
-    targetProgress = total > 0 ? scrolled / total : 0;
+  // Heart & Visual Effects
+  const progress = bloodLevel / 100;
+  const heartSvg = heart.querySelector('.heart-svg');
+  const beatSpeed = Math.max(1.2 - (progress * 1), 0.2);
+  heartSvg.style.animationDuration = `${beatSpeed}s`;
+  
+  const heartScale = 1 + (progress * 1.5);
+  heart.style.transform = `scale(${heartScale})`;
+  
+  bloodOverlay.style.opacity = progress * 0.7;
+  
+  // SHAKE CONTROL: ONLY shake if between 20% and 99.9%
+  // Once it hits 100%, REMOVE shake permanently.
+  if (bloodLevel > 20 && bloodLevel < 100) {
+    body.classList.add('shake');
+    const shakeSpeed = Math.max(0.5 - (progress * 0.4), 0.05);
+    body.style.animationDuration = `${shakeSpeed}s`;
+  } else {
+    body.classList.remove('shake');
+    body.style.animationDuration = '0s'; // Extra safety
   }
 
-  function apply(progress) {
-    /* 끄스러미 길이 */
-    const stripHeight = lerp(20, 260, progress);
-    strip.style.height = `${stripHeight}px`;
-
-    /* 뜯기면서 오른쪽으로 약간 꺾이고, 위로 당겨지는 느낌 */
-    const rotate = lerp(0, 16, progress);
-    const translateX = lerp(0, 22, progress);
-    const translateY = lerp(0, -88, progress);
-    const t = `translate(${translateX}px, ${translateY}px) rotate(${rotate}deg)`;
-    strip.style.transform = t;
-
-    /* 끄스러미 끝부분 */
-    tip.style.transform = t;
-    tip.style.top = `${36 - progress * 88}px`;
-    tip.style.left = `${2 + progress * 22}px`;
-
-    /* 상처와 피: 초반엔 거의 없고 중반부터 드러남 */
-    const woundProgress = clamp((progress - 0.12) / 0.25, 0, 1);
-    wound.style.opacity = `${woundProgress}`;
-    wound.style.transform = `scale(${lerp(0.6, 1, woundProgress)})`;
-
-    const bloodProgress = clamp((progress - 0.28) / 0.42, 0, 1);
-    const bloodHeight = lerp(0, 86, bloodProgress);
-    bloodLine.style.opacity = `${bloodProgress}`;
-    bloodLine.style.height = `${bloodHeight}px`;
-
-    const dropProgress = clamp((progress - 0.55) / 0.25, 0, 1);
-    bloodDrop.style.opacity = `${dropProgress}`;
-    bloodDrop.style.transform = `translateY(${lerp(0, 78, dropProgress)}px) scale(${lerp(
-      0.7,
-      1.05,
-      dropProgress
-    )})`;
-
-    /* 텍스트 변화 */
-    if (progress < 0.22) {
-      title.textContent = "건드리지 마.";
-      sub.textContent = "근데… 이미 보고 있지? (scroll = peel)";
-    } else if (progress < 0.55) {
-      title.textContent = "이미 시작했네.";
-      sub.textContent = "멈추면 더 거슬려. 계속 당겨.";
-    } else if (progress < 0.82) {
-      title.textContent = "아프지?";
-      sub.textContent = "좋아. 이제 진짜가 나온다.";
-    } else {
-      title.textContent = "돌아갈 수 없어.";
-      sub.textContent = "우린 남들이 피하는 걸 열어버린다.";
-    }
-
-    /* 텍스트 약간 사라졌다가 다시 보이게 */
-    const textOpacity = 1 - clamp((progress - 0.9) / 0.1, 0, 1) * 0.18;
-    title.style.opacity = textOpacity;
-    sub.style.opacity = textOpacity;
+  // Auto-scroll when 100%
+  if (bloodLevel >= 100) {
+    setTimeout(() => {
+      introContainer.scrollIntoView({ behavior: 'smooth' });
+    }, 500);
   }
+}
 
-  function tick() {
-    ticking = false;
+function showMessage(text) {
+  gameMsg.textContent = text;
+  gameMsg.style.opacity = 1;
+  gameMsg.style.transform = 'translate(-50%, -100%)';
+  gameMsg.style.transition = 'all 0.4s ease-out';
+  
+  setTimeout(() => {
+    gameMsg.style.opacity = 0;
+    gameMsg.style.transform = 'translate(-50%, -50%)';
+  }, 800);
+}
 
-    // reduced motion: jump directly to scroll position
-    if (reducedMotion) {
-      currentProgress = targetProgress;
-      apply(currentProgress);
-      return;
-    }
+function extract(amount, msg) {
+  if (bloodLevel >= 100) return;
+  
+  bloodLevel = Math.min(bloodLevel + amount, 100);
+  updateUI();
+  showMessage(msg);
+  
+  // Flash effect
+  bloodOverlay.style.background = 'white';
+  setTimeout(() => {
+    bloodOverlay.style.background = 'radial-gradient(circle, transparent 20%, rgba(255, 0, 0, 0.4) 100%)';
+  }, 50);
+}
 
-    // ease: follow the target with a light "tug" feel
-    const follow = 0.14;
-    currentProgress = lerp(currentProgress, targetProgress, follow);
-    apply(currentProgress);
+// Click Events
+document.getElementById('bloodBtn').addEventListener('click', () => {
+  extract(15, "피순대 섭취! (+15%)");
+});
 
-    // continue until settled
-    if (Math.abs(currentProgress - targetProgress) > 0.0005) {
-      requestAnimationFrame(tick);
-      ticking = true;
-    }
+document.getElementById('soupBtn').addEventListener('click', () => {
+  extract(10, "선지해장국 흡입! (+10%)");
+});
+
+heart.addEventListener('click', () => {
+  extract(5, "심장 박동 가속! (+5%)");
+});
+
+// Initial UI
+updateUI();
+
+// Ensure scroll doesn't re-trigger shake
+window.addEventListener('scroll', () => {
+  if (bloodLevel >= 100) {
+    body.classList.remove('shake');
   }
-
-  function requestTick() {
-    if (ticking) return;
-    requestAnimationFrame(tick);
-    ticking = true;
-  }
-
-  function onScroll() {
-    computeTargetProgress();
-    requestTick();
-  }
-
-  function onResize() {
-    measure();
-    computeTargetProgress();
-    requestTick();
-  }
-
-  // init
-  measure();
-  computeTargetProgress();
-  currentProgress = targetProgress;
-  apply(currentProgress);
-
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onResize);
-})();
-
+});

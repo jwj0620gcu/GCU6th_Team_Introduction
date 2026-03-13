@@ -3,102 +3,170 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Peel Landing</title>
-  <meta name="description" content="손톱 옆 끄스러미를 끝까지 당겨 숨은 문제를 드러내는 태도. 스크롤로 peel 되는 랜딩." />
+  <title>SLAUGHTER: BLOOD HUNGER</title>
+  <meta name="description" content="도륙 모드: 성과를 쥐어짜지 않으면 끝입니다." />
   <link rel="stylesheet" href="./assets/css/base.css" />
   <link rel="stylesheet" href="./assets/css/landing.css" />
+  <style>
+    .game-scene {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--bg);
+    }
+    
+    .heart-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      z-index: 10;
+      filter: drop-shadow(0 0 30px var(--fresh-blood));
+      cursor: pointer;
+    }
+    
+    .heart-svg {
+      width: 100%;
+      height: 100%;
+      fill: var(--fresh-blood);
+    }
+
+    .heart-beat {
+      animation: heartbeat 1.2s infinite;
+    }
+
+    /* Introduction Section Styles */
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .profile-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 4px solid var(--fresh-blood);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+      box-shadow: 0 0 20px var(--fresh-blood);
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      width: 100%;
+    }
+
+    .intro-container {
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #2a0000, #4a0000);
+      padding: 80px 0;
+      opacity: 0.1;
+      transition: opacity 1s;
+    }
+    
+    .intro-active {
+      opacity: 1;
+    }
+
+    .game-msg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      font-weight: 900;
+      color: white;
+      text-shadow: 0 0 20px var(--fresh-blood);
+      pointer-events: none;
+      opacity: 0;
+      z-index: 100;
+    }
+  </style>
 </head>
-<body>
+<body id="gameBody">
   <header class="topbar" role="banner">
     <div class="container topbar-inner">
-      <a class="brand" href="./index.html" aria-label="Peel Landing 홈">PEEL</a>
-      <nav class="nav" aria-label="주요 메뉴">
-        <a href="./index.html">Landing</a>
-        <a href="./pages/about.html">About</a>
+      <a class="brand" href="./index.html">SLAUGHTER: BLOOD HUNGER</a>
+      <nav class="nav">
+        <a href="#game">Landing</a>
+        <a href="#intro">About</a>
         <a href="./pages/code.html">Code</a>
-        <a href="./pages/contact.html">Contact</a>
       </nav>
     </div>
   </header>
-  <main class="page" id="main">
-  <section class="hero" id="hero">
-    <div class="sticky">
-      <div class="noise"></div>
 
-      <div class="scene">
-        <div class="title" id="title">건드리지 마.</div>
+  <div class="hud">
+    <div class="hud-item">Status: <span class="hud-value" id="statusText">피의 허기 (Lacks blood)</span></div>
+    <div class="hud-item">추출률: <span class="hud-value" id="bloodLevel">20%</span></div>
+  </div>
 
-        <div class="finger-wrap">
-          <div class="finger"></div>
-          <div class="nail"></div>
-
-          <div class="cuticle-area">
-            <div class="wound" id="wound"></div>
-            <div class="blood-line" id="bloodLine"></div>
-            <div class="blood-drop" id="bloodDrop"></div>
-
-            <div class="hangnail-root"></div>
-            <div class="hangnail-strip" id="strip"></div>
-            <div class="tear-tip" id="tip"></div>
-          </div>
-        </div>
-
-        <div class="sub" id="sub">근데… 이미 보고 있지? (scroll = peel)</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="next">
-    <div class="next-inner">
-      <div class="pill"><span class="kbd">PEEL</span> = 불편한 진실을 드러내는 방식</div>
-      <h2 style="margin-top: 14px">끝까지 당겨. 숨은 문제를 꺼내.</h2>
-      <p>
-        대부분은 불편한 걸 덮는다. 우리는 반대로 간다. 사람들이 “그건 굳이…”라며 피해 온 지점을 잡아당겨,
-        안에 숨은 진짜 문제를 드러낸다. 이 랜딩은 그 태도를 한 장면으로 만든 것이다.
-      </p>
-      <div class="cta">
-        <a class="btn btn-primary" href="./pages/contact.html">지금 뜯어보기 (Contact)</a>
-        <a class="btn btn-ghost" href="./pages/code.html">애니메이션 수치 보기 (Code)</a>
-        <a class="btn btn-ghost" href="./pages/about.html">의도/구조 보기 (About)</a>
+  <main>
+    <section class="game-scene" id="game">
+      <div id="gameMsg" class="game-msg"></div>
+      
+      <div class="heart-container" id="heart">
+        <svg class="heart-svg heart-beat" viewBox="0 0 32 32">
+          <path d="M16 28.5L13.65 26.4C5.4 18.9 0 14 0 8C0 3.6 3.6 0 8 0c2.5 0 4.9 1 6.6 2.8C16.3 1 18.7 0 21.2 0c4.4 0 8 3.6 8 8c0 6-5.4 10.9-13.65 18.4L16 28.5z"/>
+        </svg>
       </div>
 
-      <div class="grid" style="margin-top: 26px">
-        <div class="col-6">
-          <div class="card" style="padding: 18px; text-align: left">
-            <div class="pill">1) 불편한 지점</div>
-            <p class="lead" style="margin-top: 10px">
-              고객이 애써 피해 온 “찝찝함”을 정확히 잡아낸다. 말이 아니라, 장면으로 보여준다.
-            </p>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="card" style="padding: 18px; text-align: left">
-            <div class="pill">2) 끝까지 당김</div>
-            <p class="lead" style="margin-top: 10px">
-              스크롤 한 번에 끝나지 않게. ‘쭈욱’ 뜯기며 긴장감을 쌓고, 전환 카피로 도발한다.
-            </p>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="card" style="padding: 18px; text-align: left">
-            <div class="pill">3) 드러남</div>
-            <p class="lead" style="margin-top: 10px">
-              중반부터 상처/피가 나온다. “아프지?”를 넘어, 본질을 보게 만든다.
-            </p>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="card" style="padding: 18px; text-align: left">
-            <div class="pill">4) 행동</div>
-            <p class="lead" style="margin-top: 10px">
-              마지막은 CTA. 불편함을 “제안/구매/문의”로 전환시키는 한 줄을 남긴다.
-            </p>
-          </div>
-        </div>
+      <div class="game-ui" style="z-index: 100; bottom: 80px;">
+        <button class="game-btn" id="soupBtn">선지해장국 (Soup)</button>
+        <button class="game-btn" id="bloodBtn">피순대 (Blood)</button>
       </div>
-    </div>
-  </section>
+
+      <div class="scroll-hint">CLICK TO EXTRACT BLOOD</div>
+      <div id="bloodOverlay" class="blood-overlay"></div>
+    </section>
+
+    <!-- Integrated Chaeu Intro -->
+    <section class="intro-container" id="intro">
+      <div class="container">
+        <div class="profile-section">
+          <div class="profile-image">🧩</div>
+          <h1 class="h1">본질을 PEEL하고 성과를 <span class="blood-text" style="color: var(--gold-accent);">'채우'</span>하다</h1>
+          <p class="lead">안녕하세요, 시장의 본질을 쥐어짜 수익으로 <span class="blood-text" style="color: var(--gold-accent);">'채우'</span>는 파트너입니다.</p>
+        </div>
+
+        <div class="info-grid">
+          <div class="card" style="padding: 32px">
+            <h2 style="font-size: 24px; margin-bottom: 16px; color: var(--fresh-blood);">소개</h2>
+            <p class="lead" style="font-size: 16px;">
+              "당면만 가득한 찰순대보다 응축된 <span class="blood-text">혈액(Blood)</span>의 피순대를, 
+              뼈해장국의 안락함보다 철분 가득한 선지해장국을 탐닉합니다.
+            </p>
+            <p class="lead" style="margin-top: 16px; font-size: 16px;">
+              비즈니스도 마찬가지입니다. 가공된 껍데기는 PEEL하고, 
+              <span class="blood-text">선혈 낭자한 시장의 본질</span>을 쥐어짜 수익으로 <span class="blood-text" style="color: var(--gold-accent);">'채우'</span>합니다.
+            </p>
+            <p class="lead" style="margin-top: 16px; font-weight: bold; font-size: 17px; border-left: 4px solid var(--fresh-blood); padding-left: 20px;">
+              피 맛 좀 더 보고 싶습니다. <br>저와 함께 <span class="blood-text">시장을 도륙</span>하시겠습니까?"
+            </p>
+          </div>
+          <div class="card" style="padding: 32px">
+            <h2 style="font-size: 24px; margin-bottom: 16px">기술 스택</h2>
+            <p class="lead">시장의 본질을 도륙하는 데이터 분석 및 전략 수립 기법을 보유하고 있습니다.</p>
+          </div>
+          <div class="card" style="padding: 32px">
+            <h2 style="font-size: 24px; margin-bottom: 16px">목표</h2>
+            <p class="lead">단순한 성과를 넘어, 시장의 판도를 뒤흔드는 본질적인 변화를 추구합니다.</p>
+          </div>
+        </div>
+
+        <div class="footer" style="margin-top: 80px;">© 2026 PEEL Team Introduction.</div>
+      </div>
+    </section>
   </main>
+
   <script src="./assets/js/landing.js" defer></script>
 </body>
 </html>
