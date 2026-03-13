@@ -12,26 +12,27 @@ function JaebinPage() {
       <div className="jaebin-hero__scene" aria-hidden="true">
         <div className="jaebin-hero__abyss" />
 
+        <div
+          className="jaebin-hero__intro-panel"
+          style={{
+            top: jaebinHeroLayout.panel.top,
+            left: jaebinHeroLayout.panel.left,
+            transform: 'translateX(-50%)',
+          }}
+        >
+          <span className="jaebin-hero__eyebrow">{jaebinHeroContent.eyebrow}</span>
+          <h1>
+            {jaebinHeroContent.title.split('\n').map((line) => (
+              <span key={line} className="jaebin-hero__title-line">
+                {line}
+              </span>
+            ))}
+          </h1>
+        </div>
+
         <div className="jaebin-hero__cliff">
           <div className="jaebin-hero__cliff-face" />
           <div className="jaebin-hero__cliff-ridge" />
-
-          <div
-            className="jaebin-hero__intro-panel"
-            style={{
-              top: jaebinHeroLayout.panel.top,
-              left: jaebinHeroLayout.panel.left,
-            }}
-          >
-            <span className="jaebin-hero__eyebrow">{jaebinHeroContent.eyebrow}</span>
-            <h1>
-              {jaebinHeroContent.title.split('\n').map((line) => (
-                <span key={line} className="jaebin-hero__title-line">
-                  {line}
-                </span>
-              ))}
-            </h1>
-          </div>
 
           <div className="jaebin-hero__cliff-words">
             {jaebinHeroContent.cliffWords.map((word) => (

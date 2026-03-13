@@ -450,9 +450,10 @@ body.peel-active .finger-wrap {
 
 .jaebin-hero__intro-panel {
   position: absolute;
-  z-index: 4;
-  width: min(28vw, 330px);
+  z-index: 7;
+  width: min(92vw, 980px);
   padding: 12px 0;
+  text-align: center;
 }
 
 .jaebin-hero__eyebrow,
@@ -467,16 +468,17 @@ body.peel-active .finger-wrap {
 
 .jaebin-hero__intro-panel h1 {
   margin: 14px 0 0;
-  font-size: clamp(2rem, 3.8vw, 4.5rem);
+  font-size: clamp(1.35rem, 3.0vw, 3.0rem);
   line-height: 0.92;
   letter-spacing: -0.06em;
   text-align: center;
+  white-space: nowrap;
   font-weight: 950;
   text-shadow: 0 10px 30px rgba(0, 0, 0, 0.42);
 }
 
 .jaebin-hero__title-line {
-  display: block;
+  display: inline;
 }
 
 .jaebin-hero__cliff-words {
@@ -953,7 +955,7 @@ body.peel-active .finger-wrap {
   }
 
   .jaebin-hero__intro-panel {
-    width: min(34vw, 300px);
+    width: min(62vw, 620px);
   }
 
   .jaebin-hero__content {
@@ -996,9 +998,10 @@ body.peel-active .finger-wrap {
   }
 
   .jaebin-hero__intro-panel {
-    top: 78px !important;
-    left: 20px !important;
-    width: calc(100% - 60px);
+    top: 62px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: calc(100% - 28px);
     padding: 0;
   }
 

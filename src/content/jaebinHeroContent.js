@@ -1,7 +1,7 @@
 export const jaebinHeroContent = {
   eyebrow: 'Against the Flow',
   badge: 'JAEBIN PHILOSOPHY',
-  title: '유전적 관성을 거슬러\n정신적 거인으로 역행한다',
+  title: '유전적 관성을 거슬러 정신적 거인으로 역행한다',
   declaration:
     '편한 방향으로 미끄러지는 대신, 본능과 관성의 순행을 거슬러 더 큰 정신으로 올라서는 사람.',
   profileImage: '/members/jaebin.JPG',
@@ -24,8 +24,8 @@ export const jaebinHeroContent = {
 
 export const jaebinHeroLayout = {
   panel: {
-    top: '11%',
-    left: '8%',
+    top: '6%',
+    left: '50%',
   },
   boat: {
     left: '45%',
