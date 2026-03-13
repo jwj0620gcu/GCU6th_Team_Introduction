@@ -10,6 +10,7 @@ const members = [
     photo: '/members/wonjun.jpg',
     major: '가천대 소프트웨어학과',
     desc: '문제 정의와 우선순위 설정을 맡아 프로젝트 방향을 설계합니다.',
+    detailPath: '/pokemon',
   },
   {
     id: 'B',
@@ -17,6 +18,7 @@ const members = [
     photo: '/members/jaebin.jpeg',
     major: '가천대 기계공학과',
     desc: '사용자 경험 중심으로 인터랙션과 화면 완성도를 높입니다.',
+    detailPath: '/jaebin',
   },
   {
     id: 'C',
@@ -24,6 +26,7 @@ const members = [
     photo: '/members/chaewoo.jpeg',
     major: '가천대 경영학과',
     desc: '안정적인 구조와 데이터 흐름을 설계해 서비스 신뢰도를 만듭니다.',
+    detailPath: '/chaewoo',
   },
   {
     id: 'D',
@@ -31,6 +34,7 @@ const members = [
     photo: '/members/yujeong.jpg',
     major: '충남대 컴퓨터 융합학부',
     desc: '실험과 검증을 반복하며 실제 임팩트가 나는 실행 전략을 만듭니다.',
+    detailPath: '/yujeong',
   },
 ];
 
@@ -100,13 +104,12 @@ function LandingPage() {
                 </div>
                 <p className="mt-0.5 text-sm font-medium text-white/82">{member.major}</p>
                 <p className="mt-2 text-sm leading-7 text-white/86">{member.desc}</p>
-                {member.id === 'A' ? (
-                  <Link to="/pokemon" className="mt-3 block text-xs font-semibold text-cyan-300 hover:text-cyan-200">
-                    A 상세 페이지 보기
-                  </Link>
-                ) : (
-                  <span className="mt-3 block text-xs font-medium text-white/45">{member.id} 상세 페이지 준비중</span>
-                )}
+                <Link
+                  to={member.detailPath}
+                  className="mt-3 block text-xs font-semibold text-cyan-300 hover:text-cyan-200"
+                >
+                  {member.id} 상세 페이지 보기
+                </Link>
               </article>
             ))}
           </div>
