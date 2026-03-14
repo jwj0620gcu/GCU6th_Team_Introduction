@@ -186,26 +186,36 @@ function ChaewooPage() {
                   />
                   <div className="mt-3 rounded-lg border border-red-200/20 bg-black/35 px-3 py-2">
                     <p className="text-[11px] uppercase tracking-[0.18em] text-red-100/80">Status</p>
-                    <p className="mt-1 text-sm font-bold text-red-200">Recovered / Active</p>
+                    <p className="mt-1 text-sm font-bold text-red-200">코코네스쿨 8기</p>
                   </div>
                 </div>
 
                 <div className="space-y-4">
                   <div>
                     <p className="text-[11px] uppercase tracking-[0.22em] text-red-100/70">Revival Log</p>
-                    <h2 className="mt-1 text-3xl font-black tracking-tight text-white">Chaewoo</h2>
-                    <p className="mt-1 text-sm text-red-100/85">제품의 맥박을 다시 뛰게 만드는 문제 해결가</p>
+                    <h2 className="mt-1 text-3xl font-black tracking-tight text-white">김채우</h2>
+                    <p className="mt-1 text-sm font-semibold text-red-100/90">경영학전공</p>
                   </div>
 
                   <div className="rounded-xl border border-red-100/15 bg-black/35 p-4">
                     <p className="text-sm leading-7 text-white/90">
-                      작은 이상 신호를 놓치지 않고 원인을 추적해 사용자가 체감하는 불편을 줄입니다. 데이터와
-                      감각을 함께 보며, 복잡한 문제를 실행 가능한 우선순위로 바꾸는 데 강점이 있습니다.
+                      가공된 껍데기를 PEEL하고, 선혈 낭자한 비즈니스의 본질을 '채우'하는 전략가
                     </p>
                   </div>
 
+                  <div className="grid gap-3 text-sm text-white/90 md:grid-cols-2">
+                    <div className="rounded-xl border border-red-200/20 bg-red-500/10 p-3">
+                      <p className="text-xs uppercase tracking-[0.14em] text-red-100/80">관심 있는 분야</p>
+                      <p className="mt-1 font-semibold">마케팅</p>
+                    </div>
+                    <div className="rounded-xl border border-red-200/20 bg-red-500/10 p-3">
+                      <p className="text-xs uppercase tracking-[0.14em] text-red-100/80">취미</p>
+                      <p className="mt-1 font-semibold">축구, 러닝, 헬스, OTT 시청</p>
+                    </div>
+                  </div>
+
                   <div className="flex flex-wrap gap-2">
-                    {['Problem Mapping', 'Flow Design', 'Rapid Iteration', 'Service Thinking'].map((tag) => (
+                    {['매번이_반전', '파도같은_남자'].map((tag) => (
                       <span
                         key={tag}
                         className="rounded-full border border-red-200/25 bg-red-500/10 px-3 py-1 text-xs font-semibold text-red-100"

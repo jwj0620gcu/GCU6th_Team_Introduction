@@ -24,8 +24,8 @@ const members = [
     id: 'C',
     name: '김채우',
     photo: '/members/chaewoo.jpeg',
-    major: '가천대 경영학과',
-    desc: '안정적인 구조와 데이터 흐름을 설계해 서비스 신뢰도를 만듭니다.',
+    major: '가천대 경영학 전공',
+    desc: "가공된 껍데기를 PEEL하고, 선혈 낭자한 비즈니스의 본질을 '채우'하는 전략가",
     detailPath: '/chaewoo',
   },
   {
