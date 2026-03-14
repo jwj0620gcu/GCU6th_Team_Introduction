@@ -7,22 +7,25 @@ const members = [
   {
     id: 'A',
     name: '정원준',
+    shortName: '원준',
     photo: '/members/wonjun.jpg',
     major: '가천대 소프트웨어학과',
-    desc: '문제 정의와 우선순위 설정을 맡아 프로젝트 방향을 설계합니다.',
+    desc: '과학적 검증을 통한 문제 정의로부터 솔루션을 도출합니다.',
     detailPath: '/pokemon',
   },
   {
     id: 'B',
     name: '이재빈',
+    shortName: '재빈',
     photo: '/members/jaebin.jpeg',
     major: '가천대 기계공학과',
-    desc: '사용자 경험 중심으로 인터랙션과 화면 완성도를 높입니다.',
+    desc: '유전적 관성을 거슬러 정신적 거인으로 역행하는 창업가',
     detailPath: '/jaebin',
   },
   {
     id: 'C',
     name: '김채우',
+    shortName: '채우',
     photo: '/members/chaewoo.jpeg',
     major: '가천대 경영학 전공',
     desc: "가공된 껍데기를 PEEL하고, 선혈 낭자한 비즈니스의 본질을 '채우'하는 전략가",
@@ -31,9 +34,10 @@ const members = [
   {
     id: 'D',
     name: '전유정',
+    shortName: '유정',
     photo: '/members/yujeong.jpg',
     major: '충남대 컴퓨터 융합학부',
-    desc: '실험과 검증을 반복하며 실제 임팩트가 나는 실행 전략을 만듭니다.',
+    desc: '사용자가 불편을 느끼는 지점을 찾아, 더 자연스러운 흐름으로 정리하는 기획자',
     detailPath: '/yujeong',
   },
 ];
@@ -108,7 +112,7 @@ function LandingPage() {
                   to={member.detailPath}
                   className="mt-3 block text-xs font-semibold text-cyan-300 hover:text-cyan-200"
                 >
-                  {member.id} 상세 페이지 보기
+                  {member.shortName} 상세 페이지 보기
                 </Link>
               </article>
             ))}
