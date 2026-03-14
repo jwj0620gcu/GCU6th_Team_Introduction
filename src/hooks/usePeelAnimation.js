@@ -52,6 +52,7 @@ function usePeelAnimation(refs) {
 
     const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
     const textBoundaries = [0.16, 0.42, 0.68, 0.86, 0.92];
+    const nextSectionTrigger = 0.98;
 
     let total = 0;
     let targetProgress = 0;
@@ -118,7 +119,7 @@ function usePeelAnimation(refs) {
       const tipStretch = 1 + pullTension * 0.15 + scrollVelocity * 0.02;
       const tipTwist = lerp(0, 10, pullTension) + pullShake * 2.2;
       tip.style.transform = `${t} rotate(${tipTwist}deg) scale(${tipStretch}, ${1 + pullTension * 0.06})`;
-      tip.style.top = `${36 - peelProgress * 96}px`;
+      tip.style.top = `${-2 - peelProgress * 96}px`;
       tip.style.left = `${1 + peelProgress * 14}px`;
 
       const woundProgress = clamp((progress - (peelStart + 0.02)) / 0.34, 0, 1);
@@ -157,7 +158,7 @@ function usePeelAnimation(refs) {
       bloodLine.style.opacity = `${bloodProgress}`;
       bloodLine.style.height = `${bloodHeight}px`;
       bloodLine.style.width = `${lerp(5, 9.8, bloodProgress) + scrollVelocity * 0.08}px`;
-      bloodLine.style.left = `${lerp(9, 7.4, bloodProgress)}px`;
+      bloodLine.style.left = `${lerp(7, 6.1, bloodProgress)}px`;
 
       const dropProgress = clamp((progress - peelStart) / 0.56, 0, 1);
       bloodDrop.style.opacity = `${dropProgress}`;
@@ -168,7 +169,7 @@ function usePeelAnimation(refs) {
       )}px) scale(${lerp(0.7, 1.14, dropProgress)})`;
       bloodDrop.style.width = `${lerp(12, 19, dropProgress)}px`;
       bloodDrop.style.height = `${lerp(14, 24, dropProgress)}px`;
-      bloodDrop.style.left = `${lerp(6, 2.8, dropProgress)}px`;
+      bloodDrop.style.left = `${lerp(2.4, 1.2, dropProgress)}px`;
 
       const ribbonProgress = clamp((progress - peelStart) / 0.68, 0, 1);
       const sway2 = Math.cos(progress * 6.5);
@@ -304,7 +305,7 @@ function usePeelAnimation(refs) {
       computeTargetProgress();
 
       const isScrollingDown = targetProgress > lastProgress;
-      if (!snappedToNext && isScrollingDown && targetProgress >= textBoundaries[4]) {
+      if (!snappedToNext && isScrollingDown && targetProgress >= nextSectionTrigger) {
         snappedToNext = true;
         nextSection.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
       }
