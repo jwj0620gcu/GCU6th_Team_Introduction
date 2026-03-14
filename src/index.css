@@ -123,7 +123,7 @@ body.peel-active .finger-wrap {
   top: 10%;
   left: 50%;
   transform: translateX(-50%);
-  width: 44%;
+  width: 76%;
   height: 30%;
   background: linear-gradient(to bottom, #edd8d8 0%, var(--nail) 100%);
   border-radius: 999px 999px 40px 40px;
@@ -132,17 +132,18 @@ body.peel-active .finger-wrap {
 
 .cuticle-area {
   position: absolute;
-  top: 10.5%;
-  left: 68%;
-  width: 22%;
-  height: 20%;
+  /* nail(top:10%, height:30%, width:76%) 기준 가운데-오른쪽 경계 */
+  top: 24.5%;
+  left: 81.5%;
+  width: 16%;
+  height: 15%;
   z-index: 12;
   pointer-events: none;
 }
 
 .wound {
   position: absolute;
-  top: 46px;
+  top: 2px;
   left: 1px;
   width: 22px;
   height: 14px;
@@ -155,7 +156,7 @@ body.peel-active .finger-wrap {
 
 .torn-skin {
   position: absolute;
-  top: 43px;
+  top: 1px;
   left: -1px;
   width: 26px;
   height: 16px;
@@ -168,8 +169,8 @@ body.peel-active .finger-wrap {
 
 .blood-line {
   position: absolute;
-  top: 56px;
-  left: 9px;
+  top: 9px;
+  left: 7px;
   width: 7px;
   height: 0;
   background: linear-gradient(to bottom, var(--blood-hi), var(--blood));
@@ -179,8 +180,8 @@ body.peel-active .finger-wrap {
 
 .blood-drop {
   position: absolute;
-  top: 56px;
-  left: 4px;
+  top: 9px;
+  left: 2px;
   width: 16px;
   height: 18px;
   background: radial-gradient(circle at 35% 30%, #d93a44 0%, var(--blood) 70%);
@@ -191,8 +192,8 @@ body.peel-active .finger-wrap {
 
 .flesh-shreds {
   position: absolute;
-  top: 46px;
-  left: 8px;
+  top: 7px;
+  left: 5px;
   width: 48px;
   height: 40px;
   pointer-events: none;
@@ -237,8 +238,8 @@ body.peel-active .finger-wrap {
 
 .tear-tip {
   position: absolute;
-  top: 38px;
-  left: 2px;
+  top: -2px;
+  left: 1px;
   width: 15px;
   height: 30px;
   background: linear-gradient(to bottom, #f8f0e7 0%, var(--hangnail) 100%);
