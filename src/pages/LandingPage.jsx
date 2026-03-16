@@ -1,46 +1,9 @@
 import { useRef } from 'react';
-import { Link } from 'react-router-dom';
-import MemberPhoto from '../components/MemberPhoto';
+import LandingFooter from '../components/landing/LandingFooter';
+import LandingHero from '../components/landing/LandingHero';
+import MemberCardsSection from '../components/landing/MemberCardsSection';
+import { members } from '../content/members';
 import usePeelAnimation from '../hooks/usePeelAnimation';
-
-const members = [
-  {
-    id: 'A',
-    name: '정원준',
-    shortName: '원준',
-    photo: '/members/wonjun.jpg',
-    major: '가천대 소프트웨어학과',
-    desc: '과학적 검증을 통한 문제 정의로부터 솔루션을 도출합니다.',
-    detailPath: '/pokemon',
-  },
-  {
-    id: 'B',
-    name: '이재빈',
-    shortName: '재빈',
-    photo: '/members/jaebin.jpeg',
-    major: '가천대 기계공학과',
-    desc: '유전적 관성을 거슬러 정신적 거인으로 역행하는 창업가',
-    detailPath: '/jaebin',
-  },
-  {
-    id: 'C',
-    name: '김채우',
-    shortName: '채우',
-    photo: '/members/chaewoo.jpeg',
-    major: '가천대 경영학 전공',
-    desc: "가공된 껍데기를 PEEL하고, 선혈 낭자한 비즈니스의 본질을 '채우'하는 전략가",
-    detailPath: '/chaewoo',
-  },
-  {
-    id: 'D',
-    name: '전유정',
-    shortName: '유정',
-    photo: '/members/yujeong.jpg',
-    major: '충남대 컴퓨터 융합학부',
-    desc: '사용자가 불편을 느끼는 지점을 찾아, 더 자연스러운 흐름으로 정리하는 기획자',
-    detailPath: '/yujeong',
-  },
-];
 
 function LandingPage() {
   const refs = {
@@ -62,104 +25,9 @@ function LandingPage() {
 
   return (
     <>
-      <section ref={refs.heroRef} className="hero relative bg-peelBg">
-        <div className="sticky-layer">
-          <div className="noise" />
-
-          <div className="scene">
-            <div ref={refs.titleRef} className="title" aria-live="polite">
-              건드리지 마.
-            </div>
-
-            <div ref={refs.fingerWrapRef} className="finger-wrap">
-              <div className="finger" />
-              <div className="nail" />
-
-              <div className="cuticle-area">
-                <div ref={refs.woundRef} className="wound" />
-                <div ref={refs.tornSkinRef} className="torn-skin" />
-                <div ref={refs.bloodLineRef} className="blood-line" />
-                <div ref={refs.bloodDropRef} className="blood-drop" />
-                <div ref={refs.fleshShredsRef} className="flesh-shreds" />
-
-                <div ref={refs.stripRef} className="hangnail-strip" />
-                <div ref={refs.tipRef} className="tear-tip" />
-              </div>
-            </div>
-
-            <div ref={refs.subRef} className="sub" aria-live="polite">
-              근데… 이미 보고 있지?
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section ref={refs.nextSectionRef} className="next">
-        <div className="next-inner -translate-y-2 md:-translate-y-4">
-          <div className="mt-12 grid grid-cols-1 gap-7 px-3 text-left md:grid-cols-2 md:px-6">
-            {members.map((member) => (
-              <article key={member.id} className="card rounded-2xl border border-white/10 bg-white/6 p-7 md:p-8">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <div className="pill inline-flex">Team Member {member.id}</div>
-                    <p className="mt-2 text-4xl font-black tracking-[-0.03em] text-white/88">{member.name}</p>
-                  </div>
-                  <MemberPhoto name={member.name} src={member.photo} />
-                </div>
-                <p className="mt-0.5 text-sm font-medium text-white/82">{member.major}</p>
-                <p className="mt-2 text-sm leading-7 text-white/86">{member.desc}</p>
-                <Link
-                  to={member.detailPath}
-                  className="mt-3 block text-xs font-semibold text-cyan-300 hover:text-cyan-200"
-                >
-                  {member.shortName} 상세 페이지 보기
-                </Link>
-              </article>
-            ))}
-          </div>
-
-          <section className="mx-auto mt-16 w-full max-w-4xl px-3 text-left md:px-6">
-            <article className="card mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/6 p-4 md:p-5">
-              <img
-                src="/members/group.jpeg"
-                alt="팀 단체사진"
-                className="h-auto w-full object-cover"
-                loading="lazy"
-              />
-            </article>
-          </section>
-
-          <h2 className="mt-12 text-4xl font-black tracking-[-0.06em] md:text-6xl">우리 팀원 자기소개</h2>
-          <p className="next-lead">문제를 해결하기 위해 모인 네 명의 창업가</p>
-        </div>
-      </section>
-
-      <footer className="border-t border-white/10 bg-[#07080d] px-4 py-12 text-white">
-        <div className="mx-auto flex w-full max-w-5xl flex-col gap-5 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="text-lg font-extrabold tracking-tight md:text-xl">GCS 6TH GROUP의 소식을 먼저 받아보세요!</p>
-          </div>
-
-          <form
-            className="flex w-full max-w-xl items-center overflow-hidden rounded-full border border-white/20 bg-white/5"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <input
-              type="email"
-              placeholder="이메일을 입력하세요"
-              className="w-full bg-transparent px-5 py-3 text-sm text-white placeholder:text-white/50 focus:outline-none"
-              aria-label="이메일"
-            />
-            <button
-              type="submit"
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-cyan-300 text-black transition hover:bg-cyan-200"
-              aria-label="제출하기"
-            >
-              →
-            </button>
-          </form>
-        </div>
-      </footer>
+      <LandingHero refs={refs} />
+      <MemberCardsSection members={members} nextSectionRef={refs.nextSectionRef} />
+      <LandingFooter />
     </>
   );
 }

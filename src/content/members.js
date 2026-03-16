@@ -1,0 +1,38 @@
+export const members = [
+  {
+    id: 'A',
+    name: '정원준',
+    shortName: '원준',
+    photo: '/members/wonjun.jpg',
+    major: '가천대 소프트웨어학과',
+    desc: '과학적 검증을 통한 문제 정의로부터 솔루션을 도출합니다.',
+    detailPath: '/pokemon',
+  },
+  {
+    id: 'B',
+    name: '이재빈',
+    shortName: '재빈',
+    photo: '/members/jaebin.jpeg',
+    major: '가천대 기계공학과',
+    desc: '유전적 관성을 거슬러 정신적 거인으로 역행하는 창업가',
+    detailPath: '/jaebin',
+  },
+  {
+    id: 'C',
+    name: '김채우',
+    shortName: '채우',
+    photo: '/members/chaewoo.jpeg',
+    major: '가천대 경영학 전공',
+    desc: "가공된 껍데기를 PEEL하고, 선혈 낭자한 비즈니스의 본질을 '채우'하는 전략가",
+    detailPath: '/chaewoo',
+  },
+  {
+    id: 'D',
+    name: '전유정',
+    shortName: '유정',
+    photo: '/members/yujeong.jpg',
+    major: '충남대 컴퓨터 융합학부',
+    desc: '사용자가 불편을 느끼는 지점을 찾아, 더 자연스러운 흐름으로 정리하는 기획자',
+    detailPath: '/yujeong',
+  },
+];
