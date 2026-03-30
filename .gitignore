@@ -1,3 +1,15 @@
 .DS_Store
 **/.DS_Store
 
+node_modules/
+.sync.env
+.env
+__pycache__/
+*.pyc
+
+# Generated outputs
+scripts/out/
+supabase-openapi.json
+
+# Supabase local temp cache
+supabase/.temp/
