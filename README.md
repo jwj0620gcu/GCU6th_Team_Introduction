@@ -1,4 +1,4 @@
-# GitHub Projects 기반 Kanban Backend (Supabase + FastAPI)
+# GitHub Projects 기반 Kanban Backend (Supabase + FastAPI) 데이터베이스 및  백엔드
 
 이 저장소는 GitHub Projects(v2) 칸반보드를 Supabase(PostgreSQL)에 동기화하고,  
 FastAPI로 조회/웹훅 수신 API를 제공하는 백엔드 프로젝트입니다.
