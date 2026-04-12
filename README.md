@@ -209,3 +209,75 @@ Swagger:
 - `SUPABASE_SERVICE_ROLE_KEY`, `GITHUB_TOKEN`, `GITHUB_WEBHOOK_SECRET`는 절대 커밋 금지
 - 실제 비밀값은 `.env` 또는 `.sync.env`에만 저장
 
+---
+
+## 11) CLI (Typer, uvx)
+
+OpenAPI(`/openapi.json`) 기준 엔드포인트 전체를 사용할 수 있는 `kanban` CLI를 제공합니다.
+
+### 설치 없이 실행 (uvx, macOS)
+
+```bash
+uvx --from . kanban --help
+```
+
+### 설정 파일 생성
+
+```bash
+uvx --from . kanban config init \
+  --base-url http://127.0.0.1:8000 \
+  --api-key YOUR_API_KEY
+```
+
+기본 설정 파일 경로:
+
+- `~/.config/kanban/config.toml`
+- 또는 `KANBAN_CONFIG=/path/to/config.toml` 환경변수로 지정
+
+직접 다른 설정파일을 쓰려면:
+
+```bash
+uvx --from . kanban --config ./kanban.local.toml board list
+```
+
+### 엔드포인트 대응 명령
+
+- `GET /health` -> `kanban health`
+- `GET /boards/` -> `kanban board list`
+- `GET /boards/{board_id}/columns` -> `kanban board columns <board_id>`
+- `GET /boards/{board_id}/issues` -> `kanban board issues <board_id>`
+- `POST /webhooks/github` -> `kanban webhook github --event issues --payload-file payload.json`
+
+### 출력 형식
+
+- 기본: 사람이 읽기 좋은 text
+- JSON: `--json` 옵션
+
+```bash
+uvx --from . kanban board list --json
+```
+
+---
+
+## 12) CLI 조회 빠른 사용법 (추가)
+
+아래는 칸반보드 조회에 바로 쓰는 명령만 모은 빠른 가이드입니다.
+
+```bash
+# 1) 현재 설정 확인 (base_url / api_key 상태 확인)
+uvx --from . kanban config show
+
+# 2) 보드 목록 조회
+uvx --from . kanban board list
+
+# 3) 특정 보드 컬럼 조회
+uvx --from . kanban board columns <BOARD_ID>
+
+# 4) 특정 보드 이슈 조회
+uvx --from . kanban board issues <BOARD_ID>
+
+# 5) JSON 출력 (자동화용)
+uvx --from . kanban --json board issues <BOARD_ID>
+```
+
+`YOUR_API_KEY`는 보통 `.sync.env`의 `SWAGGER_X_API_KEY` 값을 사용하면 됩니다.
