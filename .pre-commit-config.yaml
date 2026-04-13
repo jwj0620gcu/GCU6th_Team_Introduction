@@ -1,0 +1,24 @@
+repos:
+  - repo: local
+    hooks:
+      - id: claude-settings-json
+        name: validate .claude/settings.json
+        entry: bash -c 'python3 -m json.tool .claude/settings.json >/dev/null'
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: mistake-logger-syntax
+        name: validate record_agent_mistake.py syntax
+        entry: python3 -m py_compile scripts/record_agent_mistake.py
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: docs-required
+        name: ensure core docs exist
+        entry: bash -c 'test -f docs/PRD.md && test -f docs/TSD.md && test -f docs/DATABASE.md && test -f docs/TEST_CASE.md'
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [commit]

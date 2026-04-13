@@ -168,6 +168,8 @@ Swagger:
 
 - `http://127.0.0.1:8000/docs`
 - `http://127.0.0.1:8000/openapi.json`
+- 검증(2026-04-13): `curl -s http://127.0.0.1:8000/health` 응답 `{"ok":true}` (HTTP 200)
+- 재확인(2026-04-13): 서버 기동 상태에서 `/health` -> HTTP 200, `{"ok":true}` 정상 확인
 
 ---
 

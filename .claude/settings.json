@@ -1,0 +1,92 @@
+{
+  "ci": {
+    "pr_checks": [
+      {
+        "id": "claude-settings-json",
+        "name": "claude-settings-json",
+        "command": "python3 -m json.tool .claude/settings.json >/dev/null",
+        "fail_on_non_zero": true,
+        "blocking": true,
+        "description": "Validate .claude/settings.json syntax."
+      },
+      {
+        "id": "mistake-logger-syntax",
+        "name": "mistake-logger-syntax",
+        "command": "python3 -m py_compile scripts/record_agent_mistake.py",
+        "fail_on_non_zero": true,
+        "blocking": true,
+        "description": "Validate record_agent_mistake.py syntax."
+      },
+      {
+        "id": "docs-required",
+        "name": "docs-required",
+        "command": "test -f docs/PRD.md && test -f docs/TSD.md && test -f docs/DATABASE.md && test -f docs/TEST_CASE.md",
+        "fail_on_non_zero": true,
+        "blocking": true,
+        "description": "Ensure required backend design docs exist."
+      }
+    ],
+    "install_command": "pip install -r requirements.txt",
+    "notes": "Backend scaffold recreated. Requirements must include fastapi, uvicorn, supabase, python-dotenv, pytest, pytest-cov, pre-commit."
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 scripts/kanban_auto_hook.py start || true",
+            "timeout": 20,
+            "statusMessage": "Auto-creating kanban issue for this task"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 scripts/kanban_auto_hook.py progress || true",
+            "timeout": 20,
+            "statusMessage": "Auto-updating kanban progress"
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "Write|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 scripts/kanban_auto_hook.py fail || true",
+            "timeout": 20,
+            "statusMessage": "Auto-marking kanban issue as failed"
+          },
+          {
+            "type": "command",
+            "command": "python3 scripts/record_agent_mistake.py || true",
+            "timeout": 20,
+            "statusMessage": "Recording failed tool usage to CLAUDE.md"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 scripts/kanban_auto_hook.py done || true",
+            "timeout": 20,
+            "statusMessage": "Auto-closing kanban issue for completed task"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,93 @@
+name: CLI E2E
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cli-e2e:
+    # Fork PRs do not have access to repository secrets.
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      SWAGGER_X_API_KEY: ${{ secrets.KANBAN_API_KEY }}
+      KANBAN_BASE_URL: http://127.0.0.1:8000
+      PYTHONUNBUFFERED: "1"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        run: python -m pip install --upgrade uv
+
+      - name: Validate required secrets
+        run: |
+          test -n "$SUPABASE_URL" || { echo "Missing secret: SUPABASE_URL"; exit 1; }
+          test -n "$SUPABASE_SERVICE_ROLE_KEY" || { echo "Missing secret: SUPABASE_SERVICE_ROLE_KEY"; exit 1; }
+          test -n "$SWAGGER_X_API_KEY" || { echo "Missing secret: KANBAN_API_KEY"; exit 1; }
+
+      - name: Start API server
+        run: |
+          nohup uv run \
+            --with "fastapi==0.116.1" \
+            --with "uvicorn[standard]==0.35.0" \
+            --with "httpx==0.28.1" \
+            --with "python-dotenv==1.1.1" \
+            uvicorn app.main:app --host 127.0.0.1 --port 8000 > /tmp/kanban-api.log 2>&1 &
+          echo $! > /tmp/kanban-api.pid
+
+      - name: Wait for API health
+        run: |
+          for i in {1..30}; do
+            code="$(curl -s -o /dev/null -w '%{http_code}' "$KANBAN_BASE_URL/health" || true)"
+            if [[ "$code" == "200" ]]; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "API failed to become healthy."
+          cat /tmp/kanban-api.log || true
+          exit 1
+
+      - name: Run CLI E2E
+        run: bash scripts/run_cli_e2e.sh docs/CLI_E2E_RESULT.md
+
+      - name: Publish result summary
+        if: always()
+        run: |
+          echo "## CLI E2E Result" >> "$GITHUB_STEP_SUMMARY"
+          if [[ -f docs/CLI_E2E_RESULT.md ]]; then
+            cat docs/CLI_E2E_RESULT.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Result file not found." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cli-e2e-report
+          path: |
+            docs/CLI_E2E_RESULT.md
+            /tmp/kanban-api.log
+
+      - name: Stop API server
+        if: always()
+        run: |
+          if [[ -f /tmp/kanban-api.pid ]]; then
+            kill "$(cat /tmp/kanban-api.pid)" || true
+          fi
+
