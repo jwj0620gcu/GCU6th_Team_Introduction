@@ -6,6 +6,10 @@ node_modules/
 .env
 __pycache__/
 *.pyc
+.pytest_cache/
+.venv/
+build/
+*.egg-info/
 
 # Generated outputs
 scripts/out/
@@ -13,3 +17,8 @@ supabase-openapi.json
 
 # Supabase local temp cache
 supabase/.temp/
+
+# Local agent/runtime state
+.claude/worktrees/
+.claude/kanban-state.json
+.claude/kanban-auto-map.json
